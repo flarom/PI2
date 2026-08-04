@@ -1,0 +1,80 @@
+{
+    "exams": [
+        {
+            "name": "Hemograma completo",
+            "priority": 2
+        },
+        {
+            "name": "Glicemia em jejum",
+            "priority": 2
+        },
+        {
+            "name": "Colesterol total e frações",
+            "priority": 2
+        },
+        {
+            "name": "Eletrocardiograma",
+            "priority": 1
+        },
+        {
+            "name": "Ressonância magnética",
+            "priority": 1
+        },
+        {
+            "name": "Tomografia computadorizada",
+            "priority": 1
+        },
+        {
+            "name": "Raio-X de tórax",
+            "priority": 2
+        },
+        {
+            "name": "Ultrassonografia abdominal",
+            "priority": 2
+        },
+        {
+            "name": "Ecocardiograma",
+            "priority": 1
+        },
+        {
+            "name": "Hemoglobina glicada",
+            "priority": 3
+        },
+        {
+            "name": "TSH e T4 livre",
+            "priority": 2
+        },
+        {
+            "name": "Creatinina sérica",
+            "priority": 3
+        },
+        {
+            "name": "Urina tipo 1",
+            "priority": 3
+        },
+        {
+            "name": "PCR e VHS",
+            "priority": 2
+        },
+        {
+            "name": "Biópsia de lesão",
+            "priority": 1
+        },
+        {
+            "name": "Colonoscopia",
+            "priority": 1
+        },
+        {
+            "name": "Endoscopia digestiva alta",
+            "priority": 2
+        },
+        {
+            "name": "Teste de esforço",
+            "priority": 3
+        },
+        {
+            "name": "Densitometria óssea",
+            "priority": 3
+        }
+    ]
+}

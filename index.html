@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem de pacientes</title>
+</head>
+<body>
+    <main>
+        <form>
+            <label for="exam-name">Nome do exame</label>
+            <input type="text" id="exam-name" list="exam-names" placeholder="Digite o nome do exame">
+            <datalist id="exam-names"></datalist>
+            
+            <label for="exam-priority">Prioridade</label>
+            <input type="number" id="exam-priority" min="1" max="3" placeholder="1 a 3">
+
+            <button type="button" id="clear-btn">Limpar</button>
+            <button type="submit" id="submit-btn">Enviar</button>
+        </form>
+    </main>
+    
+    <script src="script/populate.js"></script>
+</body>
+</html>
