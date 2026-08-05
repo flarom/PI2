@@ -1,0 +1,154 @@
+:root {
+    --s-100: #ffffff;
+    --s-200: #f4f6f8;
+    --s-300: #dde3e8;
+    --s-400: #9aa5ad;
+    --s-500: #39424a;
+    --blue: #1474bd;
+    --blue-dark: #0b4a7a;
+    --green: #1b8f7d;
+    --green-dark: #0d6e5f;
+    --r1: 16px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background: var(--s-200);
+    color: var(--s-500);
+    min-height: 100vh;
+    user-select: none;
+}
+
+.can-select {
+    user-select: all;
+}
+
+/*
+HEADER
+*/
+
+header {
+    background: var(--s-100);
+    border-bottom: 1px solid var(--s-300);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--s-500);
+}
+
+header section {
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 64px;
+}
+
+header section.left {
+    border-right: 1px solid var(--s-300);
+    justify-content: start;
+}
+
+header section.right {
+    border-left: 1px solid var(--s-300);
+    justify-content: end;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px;
+}
+
+form {
+    background: var(--s-100);
+    border: 1px solid var(--s-300);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+label {
+    color: var(--s-500);
+    margin-bottom: 4px;
+}
+
+input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    color: var(--s-500);
+    background: var(--s-200);
+    border: 1px solid var(--s-300);
+    border-radius: 90px;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+input::placeholder {
+    color: var(--s-400);
+}
+
+input:focus {
+    border-color: transparent;
+    outline: 2px solid var(--blue);
+    background: var(--s-100);
+}
+
+input:disabled {
+    background: #e8f3f0;
+    border-color: var(--green);
+    color: var(--green-dark);
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+button {
+    flex: 1;
+    padding: 11px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 90px;
+    transition: all 0.15s ease;
+}
+
+#submit-btn {
+    background: var(--green);
+    color: var(--s-100);
+}
+
+#submit-btn:hover {
+    background: var(--green-dark);
+}
+
+#clear-btn {
+    background: var(--s-200);
+    color: var(--s-500);
+    border: 1px solid var(--s-300);
+}
+
+#clear-btn:hover {
+    background: var(--s-300);
+}
