@@ -9,29 +9,107 @@
 <body>
     <header>
         <section class="left">
-            <h1>Centro de Triagem</h1>
+            <h3>Centro de Triagem</h3>
         </section>
         <section class="right">
-            <button id="add-new">Nova entrada</button>
+            <button id="add-new" class="primary">Novo diagnostico</button>
         </section>
     </header>
 
     <main>
-        <form>
-            <label for="exam-name">Nome do exame</label>
-            <input type="text" id="exam-name" list="exam-names" placeholder="Digite o nome do exame">
-            <datalist id="exam-names"></datalist>
-            
-            <label for="exam-priority">Prioridade</label>
-            <input type="number" id="exam-priority" value="1" min="1" max="3" placeholder="1 a 3">
+        <div class="left">
+            <h1>Aguardando atendimento</h1>
+            <section class="content">
+                <section id="severe">
+                    <h2>Severo</h2>
+                    <div class="cases">
+                        <div class="case">
+                            <div class="case-right">
+                                <div class="status severe"></div>
+                                <div>
+                                    <h4>Nome paciente</h4>
+                                    <p>Condições</p>
+                                </div>
+                            </div>
+                            <div class="case-left">
 
-            <div class="actions">
-                <button type="button" id="clear-btn">Limpar</button>
-                <button type="submit" id="submit-btn">Enviar</button>
-            </div>
-        </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="moderate">
+                    <h2>Moderado</h2>
+                    <div class="cases">
+                        <div class="case">
+                            <div class="case-right">
+                                <div class="status moderate"></div>
+                                <div>
+                                    <h4>Nome paciente</h4>
+                                    <p>Condições</p>
+                                </div>
+                            </div>
+                            <div class="case-left">
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="light">
+                    <h2>Leve</h2>
+                    <div class="cases">
+                        <div class="case">
+                            <div class="case-right">
+                                <div class="status light"></div>
+                                <div>
+                                    <h4>Nome paciente</h4>
+                                    <p>Condições</p>
+                                </div>
+                            </div>
+                            <div class="case-left">
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="minimum">
+                    <h2>Mínimo</h2>
+                    <div class="cases">
+                        <div class="case">
+                            <div class="case-right">
+                                <div class="status minimum"></div>
+                                <div>
+                                    <h4>Nome paciente</h4>
+                                    <p>Condições</p>
+                                </div>
+                            </div>
+                            <div class="case-left">
+
+                            </div>
+                        </div>
+                        <div class="case">
+                            <div class="case-right">
+                                <div class="status minimum"></div>
+                                <div>
+                                    <h4>Nome paciente</h4>
+                                    <p>Condições</p>
+                                </div>
+                            </div>
+                            <div class="case-left">
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+        <div class="right">
+            <h1>Em atendimento</h1>
+            <section class="content">
+                <section id="attending">
+
+                </section>
+            </section>
+        </div>
     </main>
-    
-    <script src="script/populate.js"></script>
 </body>
 </html>

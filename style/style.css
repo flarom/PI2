@@ -8,8 +8,15 @@
     --blue-dark: #0b4a7a;
     --green: #1b8f7d;
     --green-dark: #0d6e5f;
+    --red: #bd1414;
+    --red-dark: #7a0b0b;
+    --yellow: #bda414;
+    --yellow-dark: #bd8214;
     --r1: 16px;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    --header-height: 50px;
+    --main-height: calc(100vh - var(--header-height))
 }
 
 * {
@@ -26,129 +33,155 @@ body {
     user-select: none;
 }
 
-.can-select {
-    user-select: all;
-}
-
-/*
-HEADER
-*/
+/* CABEÇALHO */
 
 header {
-    background: var(--s-100);
-    border-bottom: 1px solid var(--s-300);
     display: flex;
+    background-color: var(--s-100);
+    border-bottom: 1px solid var(--s-300);
+    padding: 10px;
+    height: var(--header-height);
     align-items: center;
     justify-content: space-between;
+
+    .left {
+        display: flex;
+        align-items: center;
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
 }
 
-header h1 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--s-500);
-}
-
-header section {
-    padding: 16px 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    height: 64px;
-}
-
-header section.left {
-    border-right: 1px solid var(--s-300);
-    justify-content: start;
-}
-
-header section.right {
-    border-left: 1px solid var(--s-300);
-    justify-content: end;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    padding: 48px 20px;
-}
-
-form {
-    background: var(--s-100);
-    border: 1px solid var(--s-300);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    padding: 16px;
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-label {
-    color: var(--s-500);
-    margin-bottom: 4px;
-}
-
-input {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 1rem;
-    color: var(--s-500);
-    background: var(--s-200);
-    border: 1px solid var(--s-300);
-    border-radius: 90px;
-    outline: none;
-    transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-input::placeholder {
-    color: var(--s-400);
-}
-
-input:focus {
-    border-color: transparent;
-    outline: 2px solid var(--blue);
-    background: var(--s-100);
-}
-
-input:disabled {
-    background: #e8f3f0;
-    border-color: var(--green);
-    color: var(--green-dark);
-}
-
-.actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 8px;
-}
+/* BOTAO */
 
 button {
-    flex: 1;
-    padding: 11px 16px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 90px;
-    transition: all 0.15s ease;
+    background-color: var(--s-300);
+    border: 1px solid var(--s-400);
+    padding: 6px 12px;
+    border-radius: 12px;
+
+    &:hover {
+        background-color: var(--s-200);
+        border-color: var(--s-300);
+    }
+
+    &:focus {
+        outline: 3px solid var(--blue-dark);
+    }
+
+    &.primary {
+        background-color: var(--green-dark);
+        border-color: var(--green);
+        color: var(--s-100);
+
+        &:hover {
+            background-color: var(--green);
+        }
+    }
 }
 
-#submit-btn {
-    background: var(--green);
-    color: var(--s-100);
+/* MAIN */
+main {
+    display: flex;
+    height: var(--main-height);
+
+    .left, .right {
+        width: 100%;
+        height: 100%;
+        background-color: var(--s-200);
+        padding: 12px;
+
+        display: flex;
+        flex-direction: column;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+
+            section {
+                background-color: var(--s-100);
+                padding: 10px;
+                width: 100%;
+                max-width: 600px;
+                border-radius: 16px;
+                box-shadow: var(--shadow);
+
+                .cases {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+
+                    .case {
+                        display: flex;
+                        align-items: center;
+                        user-select: text;
+
+                        .case-right {
+                            align-items: center;
+                            display: flex;
+                            gap: 8px;
+                        }
+                        .status {
+                            min-height: 16px;
+                            min-width: 16px;
+                            max-height: 16px;
+                            max-width: 16px;
+                            height: 16px;
+                            width: 16px;
+                            margin-left: 8px;
+                            margin-right: 8px;
+                            border-radius: 8px;
+                            background-color: var(--blue);
+
+                            &.severe {
+                                background-color: var(--red);
+                                animation: 1s status-blip-severe infinite linear;
+                            }
+                            &.moderate {
+                                background-color: var(--yellow);
+                                animation: 2s status-blip-moderate infinite linear;
+                            }
+                            &.light {
+                                background-color: var(--green);
+                            }
+                            &.minimum {
+                                background-color: var(--s-100);
+                                border: 4px solid var(--blue);
+                            }
+                        }
+                    }
+                }
+            }
+
+            h2 {
+                width: 100%;
+                font-size: large;
+                margin-bottom: 12px;
+            }
+        }
+
+        h1 {
+            margin-bottom: 24px;
+        }
+    }
+
+    .left {
+        border-right: 1px solid var(--s-300);
+    }
+    .right {
+    }
 }
 
-#submit-btn:hover {
-    background: var(--green-dark);
+@keyframes status-blip-severe {
+    from {box-shadow: 0px 0px 0px 0px #7a0b0baa;}
+    to   {box-shadow: 0px 0px 0px 7px #7a0b0b00;}
 }
-
-#clear-btn {
-    background: var(--s-200);
-    color: var(--s-500);
-    border: 1px solid var(--s-300);
-}
-
-#clear-btn:hover {
-    background: var(--s-300);
+@keyframes status-blip-moderate {
+    from {box-shadow: 0px 0px 0px 0px #bd821466;}
+    to   {box-shadow: 0px 0px 0px 5px #bd821400;}
 }
