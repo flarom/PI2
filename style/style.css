@@ -72,6 +72,10 @@ button {
         outline: 3px solid var(--blue-dark);
     }
 
+    &:active {
+        filter: brightness(0.9);
+    }
+
     &.primary {
         background-color: var(--green-dark);
         border-color: var(--green);
@@ -125,6 +129,10 @@ main {
                             align-items: center;
                             display: flex;
                             gap: 8px;
+                            width: 100%;
+                        }
+                        .case-left {
+                            height: 100%;
                         }
                         .status {
                             min-height: 16px;
