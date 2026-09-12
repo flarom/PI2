@@ -8,6 +8,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log(storage.get("teste"));
 
     //dialog.show('<h1>olá mundo</h1><p>teste de dialog</p>');
-    let teste = await dialog.showFile('dialog/confirm.html');
+    let teste = await dialog.showFile('dialog/confirm.html', {'title': 'teste'});
     console.log (teste);
 });

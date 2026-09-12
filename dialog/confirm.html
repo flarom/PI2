@@ -1,28 +1,47 @@
 <!DOCTYPE html>
+
+<!--
+# Confirm dialog
+Exibe um dialogo de confirmação na tela.
+
+@param {string} title   Titulo exibido no topo do dialogo
+@param {string} content Conteúdo em HTML exibido dentro do dialogo
+@param {string} noText  Texto exibido no botão de não
+@param {string} yesText Texto exibido no botão de sim
+-->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm</title>
     <meta name="dialog-prefered-width" content="330">
-    <meta name="dialog-toolbar-center" content="<span>Confirm</span>">
+    <meta name="dialog-toolbar-center" content="<label id='confirm-dialog-toolbar-title'>Confirm</label>">
     <meta name="dialog-toolbar-overlay" content="false">
 </head>
 <body>
-    <div class="padding">
-        <div class="button-row">
-            <button id="confirm-dialog-button-no">Não</button>
-            <button id="confirm-dialog-button-yes">Sim</button>
-        </div>
+    <div class="padding" id="confirm-dialog-content">
+        
+    </div>
+    <div class="button-row">
+        <button id="confirm-dialog-button-no">Não</button>
+        <button id="confirm-dialog-button-yes" class="primary">Sim</button>
     </div>
 
     <script>
         (() => {
-            const btnNo = document.getElementById('confirm-dialog-button-no');
-            const btnYes = document.getElementById('confirm-dialog-button-yes');
+            const btnNo      = document.getElementById('confirm-dialog-button-no');
+            const btnYes     = document.getElementById('confirm-dialog-button-yes');
+            const spanTitle  = document.getElementById('confirm-dialog-toolbar-title');
+            const divContent = document.getElementById('confirm-dialog-content');
+
+            spanTitle.innerText  = window.dialogArgs().title   ?? "Confirm";
+            divContent.innerHTML = window.dialogArgs().content ?? "<label>Please select an option</label>";
+            btnNo.innerText      = window.dialogArgs().noText  ?? "No";
+            btnYes.innerText     = window.dialogArgs().yesText ?? "Yes";
 
             btnNo.addEventListener ('click', () => { window.dialogReturn(false); })
-            btnYes.addEventListener('click', () => { window.dialogReturn(true); })
+            btnYes.addEventListener('click', () => { window.dialogReturn(true);  })
         })();
     </script>
 </body>

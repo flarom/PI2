@@ -1,6 +1,6 @@
 /**
  * # Dialog
- * Interface para a API de diálogos (portada do Cohesion), reduzida ao essencial.
+ * Interface para a API de diálogos (portada do [Cohesion](https://github.com/flarom/cohesion)), reduzida ao essencial.
  * 
  * Diálogos podem receber parâmetros e retornar valores. O conteúdo do diálogo
  * acessa os parâmetros e devolve o resultado através da ponte global:
