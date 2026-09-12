@@ -1,0 +1,163 @@
+/* MARK: Dialogos */
+dialog {
+    color: var(--s-500);
+    background-color: var(--s-100);
+    border: 1px solid var(--s-300);
+    border-radius: 20px;
+    padding: 0px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    animation: showdialog 0.5s ease-in-out forwards;
+    outline: none;
+    min-height: 100px;
+}
+
+@keyframes showdialog {
+    0% {
+        transform: scale(0);
+    }
+
+    60% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes showdialogMobile {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes showDialogBackdrop {
+    from {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    to {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+dialog.no-animation {
+    animation: none;
+}
+
+@media (max-width: 500px) {
+    dialog {
+        width: 100%;
+        max-width: none;
+        border-radius: 20px 20px 0px 0px;
+        margin-top: auto;
+        margin-bottom: 0;
+        animation: showdialogMobile 0.5s ease-in-out forwards;
+    }
+}
+
+dialog::backdrop {
+    animation: showDialogBackdrop 0.5s ease-in-out forwards;
+}
+
+dialog.nobg::backdrop {
+    background-color: var(--s-100);
+    animation: none;
+}
+
+dialog.nobg.no-animation::backdrop {
+    animation: none;
+}
+
+dialog .toolbar {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    pointer-events: none;
+    background-color: transparent;
+    border: none;
+    z-index: 99;
+}
+
+dialog .toolbar .icon {
+    width: 32px;
+    height: 32px;
+    font-size: x-large;
+}
+
+dialog .toolbar .toolbar-left,
+dialog .toolbar .toolbar-center,
+dialog .toolbar .toolbar-right {
+    display: flex;
+    gap: 8px;
+    pointer-events: none;
+    flex: 1;
+}
+
+dialog .toolbar .toolbar-left   {text-align: left;   justify-content: start;}
+dialog .toolbar .toolbar-center {text-align: center; justify-content: center;}
+dialog .toolbar .toolbar-right  {text-align: right;  justify-content: end;}
+
+dialog .toolbar .toolbar-left *,
+dialog .toolbar .toolbar-center *,
+dialog .toolbar .toolbar-right * {
+    pointer-events: all;
+}
+
+dialog .toolbar .dialog-window-control {
+    border-radius: 16px;
+    font-size: large;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: var(--s-200);
+}
+
+dialog .toolbar .dialog-window-control:hover {
+    background-color: var(--s-300);
+}
+
+dialog .toolbar.no-overlay {
+    position: static;
+}
+
+dialog .dialog-content {
+    overflow: scroll;
+}
+
+dialog .padding {
+    padding: 10px;
+}
+
+dialog .padding-top {
+    padding: 48px 10px 10px 10px;
+}
+
+dialog:has(.toolbar.no-overlay) .padding,
+dialog:has(.toolbar.no-overlay) .padding-top {
+    padding-top: 0px;
+}
+
+.button-row {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: revert;
+  gap: 10px;
+}
+
+.button-row button {
+  width: 100%;
+  border-radius: 12px;
+}

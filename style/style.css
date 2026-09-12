@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded");
+
 :root {
     --s-100: #ffffff;
     --s-200: #f4f6f8;
@@ -84,6 +86,20 @@ button {
         &:hover {
             background-color: var(--green);
         }
+    }
+
+    &.icon {
+        font-size: x-large;
+        font-family: "Material Symbols Rounded";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        background: none;
+        border: none;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        height: 30px;
     }
 }
 

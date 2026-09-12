@@ -45,6 +45,7 @@ export const storage = (() => {
             }
         });
     }
+
     return {
         set,
         get,
