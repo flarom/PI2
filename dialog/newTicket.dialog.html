@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<!--
+# New ticket dialog
+Exibe um formulario para cadastrar um novo ticket.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo ticket</title>
+    <meta name="dialog-prefered-width" content="630">
+    <meta name="dialog-toolbar-center" content="<label>Novo ticket</label>">
+    <meta name="dialog-toolbar-overlay" content="false">
+</head>
+<body>
+    <div class="padding">
+        <form>
+            <section>
+                <div class="row">
+                    <label for="patName">Nome do paciente</label>
+                    <input type="text" name="patName" id="patName">
+                </div>
+                <div class="row">
+                    <label for="patAge" class="required">Idade</label>
+                    <input type="number" name="patAge" id="patAge" value="0" min="0">
+                </div>
+            </section>
+
+            <section>
+                <div class="row">
+                    <label for="patWeight">Peso</label>
+                    <div class="field">
+                        <input type="number" name="patWeight" id="patWeight" value="0.00" min="0" step="0.01">
+                        <label>kg</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="patHeight">Altura</label>
+                    <div class="field">
+                        <input type="number" name="patHeight" id="patHeight" value="0" min="0" step="1">
+                        <label>cm</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="patTemperature">Temperatura</label>
+                    <div class="field">
+                        <input type="number" name="patTemperature" id="patTemperature" value="0.0" min="0" step="0.1">
+                        <label>°C</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="patHeartRate">Batimentos cardiacos</label>
+                    <div class="field">
+                        <input type="number" name="patHeartRate" id="patHeartRate" value="0" min="0" step="1">
+                        <label>BPM</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="patPressue">Pressão arterial</label>
+                    <div class="field">
+                        <input type="number" name="patPressue" id="patPressueSistolica" value="0" min="0" step="1">
+                        <label>/</label>
+                        <input type="number" name="patPressue" id="patPressueDiastolica" value="0" min="0" step="1">
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <script>
+        (() => {
+            // object returning logic here
+        })();
+    </script>
+</body>
+</html>

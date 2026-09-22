@@ -18,6 +18,7 @@
     --orange-dark: #bd5f0b;
     --r1: 16px;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-light: 0 2px 3px rgba(0, 0, 0, 0.13);
 
     --header-height: 50px;
     --main-height: calc(100vh - var(--header-height))
@@ -67,6 +68,7 @@ button {
     padding: 6px 12px;
     border-radius: 12px;
     user-select: none;
+    box-shadow: var(--shadow-light);
 
     &:hover {
         background-color: var(--s-200);
