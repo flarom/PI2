@@ -1,4 +1,4 @@
-## PI2 - Sistema de triagem médica
+# PI2 - Sistema de triagem médica
 
 Segundo projeto integrador - Site para Triagens médicas simplificado utilizando a linguagem de programação JavaScript, com o intuíto de descrever sintomas e agendamentos de consultas para instituições públicas (Estilo SUS).
 
