@@ -86,6 +86,15 @@ class Demo {
             'Monteiro', 'Barbosa'
         ];
 
+        /** @type {Array<string>} apelidos de colegas da turma, deve haver uma pequena chance desses nomes serem selecionados no lugar de nome normal */
+        this.easterEggNames = [
+            'Pudimzão', 'Gordalisson', 'Gordiga', 'Gordelicia', '67', 'Xixa',
+            'Resenha', 'Eneias', 'Borracheiro', 'Cearense', 'Padeiro',
+            'Vinicius Videos Curtos', 'Binotto', 'Chitolina',
+            'Por Agua a Baixo', 'Freddie Mercury', 'Chilas', 'Lumi', 'Tonas',
+            'Sananduva', 'Bequilava', 'Geremias', 'Neilove', 'Marcos Lucas', 'Malamar'
+        ];
+
         /**
          * Faixas de idade, peso e altura comuns em adultos
          * @type {object}
@@ -171,6 +180,18 @@ class Demo {
             }
         };
     }
+    
+    /**
+     * Sorteia um nome completo aleatório, com pequena chance de ser um apelido da turma
+     * @returns {string} o nome sorteado
+     */
+    randomName() {
+        if (Math.random() < 0.1) {
+            return this.pick(this.easterEggNames);
+        }
+
+        return `${this.pick(this.firstNames)} ${this.pick(this.lastNames)}`;
+    }
 
     /**
      * Sorteia um número inteiro entre dois valores, incluindo as pontas
@@ -232,7 +253,7 @@ class Demo {
 
         return {
             patient: {
-                name: `${this.pick(this.firstNames)} ${this.pick(this.lastNames)}`,
+                name: this.randomName(),
                 age: this.randomInt(...this.ageRange),
                 weight: this.randomFloat(...this.weightRange, 1),
                 height: this.randomInt(...this.heightRange),
