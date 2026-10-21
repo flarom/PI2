@@ -153,13 +153,13 @@ dialog:has(.toolbar.no-overlay) .padding-top {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: revert;
-  gap: 4px;
-  padding: 4px;
+  margin-top: 12px;
 }
 
 .button-row button {
   width: 100%;
-  border-radius: 24px;
+  border-radius: 0px;
+  height: 32px;
 }
 
 dialog form {
@@ -182,11 +182,96 @@ dialog form {
         padding: 6px 12px;
         border-radius: 12px;
         width: 300px;
-        box-shadow: var(--shadow-light);
+        transition: transform 0.3s ease;
 
         &:focus {
             background-color: var(--s-100);
-            border-color: var(--green-dark);
+            border-color: transparent;
+            outline: 3px solid var(--green-dark);
+            transform: scale(1.02);
+        }
+    }
+
+    input[type="range"] {
+        appearance: none;
+        -webkit-appearance: none;
+        accent-color: var(--green-dark);
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        padding: 0px;
+        width: 100%;
+        height: 20px;
+        margin: 4px 0px;
+        cursor: pointer;
+
+        &:focus {
+            background: transparent;
+            border: none;
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--blue-dark);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        &::-webkit-slider-runnable-track {
+            height: 6px;
+            background-color: var(--s-300);
+            border-radius: 3px;
+        }
+
+        &::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            height: 20px;
+            width: 20px;
+            border-radius: 10px;
+            background-color: var(--green-dark);
+            border: none;
+            box-shadow: var(--shadow-light);
+        }
+
+        &::-moz-range-track {
+            height: 6px;
+            background-color: var(--s-300);
+            border-radius: 3px;
+        }
+
+        &::-moz-range-progress {
+            height: 6px;
+            background-color: var(--green-dark);
+            border-radius: 3px;
+        }
+
+        &::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 10px;
+            background-color: var(--green-dark);
+            border: none;
+            box-shadow: var(--shadow-light);
+        }
+    }
+
+    textarea {
+        background-color: var(--s-100);
+        border: 1px solid var(--s-300);
+        padding: 6px 12px;
+        border-radius: 12px;
+        width: 300px;
+        min-height: 200px;
+        resize: vertical;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+
+        &:focus {
+            background-color: var(--s-100);
+            border-color: transparent;
+            outline: 3px solid var(--green-dark);
         }
     }
 
@@ -216,23 +301,46 @@ dialog form {
         }
     }
 
-    .row .field {
+    .field {
         display: flex;
         align-items: center;
         gap: 8px;
         width: 300px;
+
+        input {
+            flex: 1 1 auto;
+            min-width: 0;
+            width: auto;
+        }
+
+        label {
+            flex: none;
+            width: auto;
+            display: inline;
+            color: var(--s-400);
+        }
     }
 
-    .row .field input {
-        flex: 1 1 auto;
-        min-width: 0;
-        width: auto;
+    .block {
+        background-color: var(--s-100);
+        border-radius: 12px;
+        box-shadow: var(--shadow-light);
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+        align-items: flex-start;
+
+        textarea {
+            width: 100%;
+        }
     }
 
-    .row .field label {
-        flex: none;
-        width: auto;
-        display: inline;
-        color: var(--s-400);
+    .level {
+        width: 100%;
+        text-align: center;
+        font-size: medium;
+        color: var(--s-500);
     }
 }

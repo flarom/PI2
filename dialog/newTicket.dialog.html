@@ -9,9 +9,9 @@ Exibe um formulario para cadastrar um novo ticket.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo ticket</title>
+    <title>Novo diagnóstico</title>
     <meta name="dialog-prefered-width" content="630">
-    <meta name="dialog-toolbar-center" content="<label>Novo ticket</label>">
+    <meta name="dialog-toolbar-center" content="<label>Novo diagnóstico</label>">
     <meta name="dialog-toolbar-overlay" content="false">
 </head>
 <body>
@@ -20,11 +20,11 @@ Exibe um formulario para cadastrar um novo ticket.
             <section>
                 <div class="row">
                     <label for="patName">Nome do paciente</label>
-                    <input type="text" name="patName" id="patName">
+                    <input type="text" name="patName" id="new-ticket-patName">
                 </div>
                 <div class="row">
                     <label for="patAge" class="required">Idade</label>
-                    <input type="number" name="patAge" id="patAge" value="0" min="0">
+                    <input type="number" name="patAge" id="new-ticket-patAge" value="0" min="0">
                 </div>
             </section>
 
@@ -32,46 +32,109 @@ Exibe um formulario para cadastrar um novo ticket.
                 <div class="row">
                     <label for="patWeight">Peso</label>
                     <div class="field">
-                        <input type="number" name="patWeight" id="patWeight" value="0.00" min="0" step="0.01">
+                        <input type="number" name="patWeight" id="new-ticket-patWeight" value="0.00" min="0" step="0.01">
                         <label>kg</label>
                     </div>
                 </div>
                 <div class="row">
                     <label for="patHeight">Altura</label>
                     <div class="field">
-                        <input type="number" name="patHeight" id="patHeight" value="0" min="0" step="1">
+                        <input type="number" name="patHeight" id="new-ticket-patHeight" value="0" min="0" step="1">
                         <label>cm</label>
                     </div>
                 </div>
                 <div class="row">
                     <label for="patTemperature">Temperatura</label>
                     <div class="field">
-                        <input type="number" name="patTemperature" id="patTemperature" value="0.0" min="0" step="0.1">
+                        <input type="number" name="patTemperature" id="new-ticket-patTemperature" value="36.5" min="0" step="0.1">
                         <label>°C</label>
                     </div>
                 </div>
                 <div class="row">
                     <label for="patHeartRate">Batimentos cardiacos</label>
                     <div class="field">
-                        <input type="number" name="patHeartRate" id="patHeartRate" value="0" min="0" step="1">
+                        <input type="number" name="patHeartRate" id="new-ticket-patHeartRate" value="67" min="0" step="1">
                         <label>BPM</label>
                     </div>
                 </div>
                 <div class="row">
                     <label for="patPressue">Pressão arterial</label>
                     <div class="field">
-                        <input type="number" name="patPressue" id="patPressueSistolica" value="0" min="0" step="1">
+                        <input type="number" name="patPressue" id="new-ticket-patPressueSistolica" value="120" min="0" max="200" step="1">
                         <label>/</label>
-                        <input type="number" name="patPressue" id="patPressueDiastolica" value="0" min="0" step="1">
+                        <input type="number" name="patPressue" id="new-ticket-patPressueDiastolica" value="80" min="0" max="100" step="1">
                     </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="row block">
+                    <label for="patSeverity" class="required">Gravidade</label>
+                    <input type="range" name="patSeverity" id="new-ticket-patSeverity" min="1" max="5" step="1" value="3">
+                    <label class="level" id="new-ticket-patSeverityLevel" for="patSeverity"></label>
+                </div>
+                <div class="row block">
+                    <label for="patSymptoms">Sintomas</label>
+                    <textarea name="patSymptoms" id="new-ticket-patSymptoms" rows="4" placeholder="Descreva os sintomas informados"></textarea>
                 </div>
             </section>
         </form>
     </div>
+    <div class="button-row">
+        <button id="new-ticket-button-cancel">Cancelar</button>
+        <button id="new-ticket-button-confirm" class="primary">Confirmar</button>
+    </div>
 
     <script>
         (() => {
-            // object returning logic here
+            // exibe o nivel de gravidade correspondente ao valor do input range
+            const severity       = document.getElementById('new-ticket-patSeverity');
+            const severityLevel  = document.getElementById('new-ticket-patSeverityLevel');
+            const symptoms       = document.getElementById('new-ticket-patSymptoms');
+
+            const labels = window.dialogArgs().severityLabels;
+            const levels = Array.isArray(labels) && labels.length === 5
+                ? labels
+                : ['1', '2', '3', '4', '5'];
+
+            function markLevel(value) {
+                severityLevel.textContent = levels[Number(value) - 1] ?? '';
+            }
+
+            severity.addEventListener('input', () => {
+                markLevel(severity.value);
+            });
+
+            markLevel(severity.value);
+
+            document.getElementById('new-ticket-button-confirm').addEventListener('click', () => {
+                const ticket = {
+                    uid: Math.floor(Math.random() * 0xFFFFFFFF).toString(16).padStart(8, '0'),
+                    patient: {
+                        name: document.getElementById('new-ticket-patName').value,
+                        age: parseInt(document.getElementById('new-ticket-patAge').value),
+                        weight: parseFloat(document.getElementById('new-ticket-patWeight').value),
+                        height: parseFloat(document.getElementById('new-ticket-patHeight').value),
+                        pressure: `${document.getElementById('new-ticket-patPressueSistolica').value}/${document.getElementById('new-ticket-patPressueDiastolica').value}`,
+                        heartRate: parseInt(document.getElementById('new-ticket-patHeartRate').value),
+                        temperature: parseFloat(document.getElementById('new-ticket-patTemperature').value),
+                        symptoms: symptoms.value.split(/[\n,;]+/).map(symptom => symptom.trim()).filter(Boolean),
+                        severity: parseInt(severity.value)
+                    },
+                    attend: {
+                        arrivedAt: Date.now(),
+                        status: 0,
+                        slicesUsed: 0,
+                        lastServedAt: null
+                    }
+                };
+
+                window.dialogReturn(ticket);
+            });
+
+            document.getElementById('new-ticket-button-cancel').addEventListener('click', () => {
+                window.dialogReturn(null);
+            });
         })();
     </script>
 </body>

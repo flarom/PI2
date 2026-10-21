@@ -31,7 +31,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
     background: var(--s-200);
     color: var(--s-500);
     min-height: 100vh;
@@ -57,6 +57,7 @@ header {
         display: flex;
         align-items: center;
         justify-content: end;
+        gap: 8px;
     }
 }
 
@@ -106,6 +107,39 @@ button {
         border-radius: 8px;
         height: 30px;
     }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: var(--s-300);
+            border-color: var(--s-400);
+        }
+    }
+}
+
+/* CONTROLES DA DEMONSTRACAO */
+
+.demo-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    button {
+        padding: 6px 10px;
+        font-size: small;
+
+        &.active {
+            background-color: var(--blue-dark);
+            border-color: var(--blue);
+            color: var(--s-100);
+
+            &:hover {
+                background-color: var(--blue);
+            }
+        }
+    }
 }
 
 label {
@@ -122,6 +156,7 @@ main {
         height: 100%;
         background-color: var(--s-200);
         padding: 12px;
+        padding-bottom: 0;
 
         display: flex;
         flex-direction: column;
@@ -131,32 +166,89 @@ main {
             flex-direction: column;
             align-items: center;
             gap: 12px;
+            overflow-y: scroll;
 
             section {
-                background-color: var(--s-100);
-                padding: 10px;
                 width: 100%;
                 max-width: 600px;
-                border-radius: 16px;
-                box-shadow: var(--shadow);
 
                 .cases {
                     display: flex;
                     flex-direction: column;
-                    gap: 24px;
+                    gap: 2px;
+                    padding-bottom: 12px;
 
                     .case {
                         display: flex;
-                        align-items: center;
                         user-select: text;
+                        background-color: var(--s-100);
+                        padding: 10px;
+                        border-radius: 4px;
+                        box-shadow: var(--shadow-light);
+
+                        &[draggable="true"] {
+                            cursor: grab;
+                        }
+                        &.dragging {
+                            opacity: 0.45;
+                        }
+
+                        &:first-of-type {
+                            border-radius: 16px 16px 4px 4px;
+                        }
+                        &:last-of-type {
+                            border-radius: 4px 4px 16px 16px;
+                        }
+                        &:only-of-type {
+                            border-radius: 16px;
+                        }
 
                         .case-right {
-                            align-items: center;
+                            align-items: flex-start;
                             display: flex;
                             gap: 8px;
                             width: 100%;
                         }
+                        .case-info {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 6px;
+                            min-width: 0;
+
+                            h4 {
+                                line-height: 1.2;
+                            }
+
+                            .symptoms {
+                                font-size: small;
+                                color: var(--s-400);
+                            }
+
+                            .vitals {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 6px;
+                                list-style: none;
+
+                                li {
+                                    display: flex;
+                                    align-items: baseline;
+                                    gap: 4px;
+                                    padding: 2px 8px;
+                                    border-radius: 8px;
+                                    background-color: var(--s-200);
+                                    border: 1px solid var(--s-300);
+                                    font-size: small;
+
+                                    .vital-name {
+                                        color: var(--s-400);
+                                    }
+                                }
+                            }
+                        }
                         .case-left {
+                            display: flex;
+                            gap: 8px;
                             height: 100%;
                         }
                         .status {
@@ -166,6 +258,7 @@ main {
                             max-width: 16px;
                             height: 16px;
                             width: 16px;
+                            margin-top: 3px;
                             margin-left: 8px;
                             margin-right: 8px;
                             border-radius: 8px;
@@ -198,6 +291,22 @@ main {
                 width: 100%;
                 font-size: large;
                 margin-bottom: 12px;
+                position: sticky;
+                top: 0;
+                background-color: var(--s-200);
+            }
+
+            .empty {
+                width: 100%;
+                max-width: 600px;
+                text-align: center;
+                color: var(--s-400);
+            }
+
+            #attending {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
             }
         }
 
@@ -210,6 +319,11 @@ main {
         border-right: 1px solid var(--s-300);
     }
     .right {
+        &.drag-over {
+            outline: 2px dashed var(--blue);
+            outline-offset: -4px;
+            background-color: rgba(20, 116, 189, 0.06);
+        }
     }
 }
 

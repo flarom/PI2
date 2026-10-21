@@ -20,112 +20,56 @@
     <main>
         <div class="left">
             <h1>Aguardando atendimento</h1>
-            <section class="content">
+            <section class="content" id="queue">
                 <section id="emergency">
                     <h2>Emergência</h2>
-                    <div class="cases">
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status emergency"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cases"></div>
                 </section>
                 <section id="very-urgent">
                     <h2>Muito urgente</h2>
-                    <div class="cases">
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status very-urgent"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cases"></div>
                 </section>
                 <section id="urgent">
                     <h2>Urgente</h2>
-                    <div class="cases">
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status urgent"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cases"></div>
                 </section>
                 <section id="slightly-urgent">
                     <h2>Pouco urgente</h2>
-                    <div class="cases">
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status slightly-urgent"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status slightly-urgent"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cases"></div>
                 </section>
                 <section id="not-urgent">
                     <h2>Não urgente</h2>
-                    <div class="cases">
-                        <div class="case">
-                            <div class="case-right">
-                                <div class="status not-urgent"></div>
-                                <div>
-                                    <h4>Nome paciente</h4>
-                                    <p>Condições</p>
-                                </div>
-                            </div>
-                            <div class="case-left">
-                                <button>Atender</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cases"></div>
                 </section>
+                <p class="empty" id="queue-empty">Nenhum paciente aguardando atendimento.</p>
             </section>
         </div>
         <div class="right">
             <h1>Em atendimento</h1>
             <section class="content">
                 <section id="attending">
-
+                    <section id="attending-emergency">
+                        <h2>Emergência</h2>
+                        <div class="cases"></div>
+                    </section>
+                    <section id="attending-very-urgent">
+                        <h2>Muito urgente</h2>
+                        <div class="cases"></div>
+                    </section>
+                    <section id="attending-urgent">
+                        <h2>Urgente</h2>
+                        <div class="cases"></div>
+                    </section>
+                    <section id="attending-slightly-urgent">
+                        <h2>Pouco urgente</h2>
+                        <div class="cases"></div>
+                    </section>
+                    <section id="attending-not-urgent">
+                        <h2>Não urgente</h2>
+                        <div class="cases"></div>
+                    </section>
                 </section>
+                <p class="empty" id="attending-empty">Nenhum paciente em atendimento.</p>
             </section>
         </div>
     </main>

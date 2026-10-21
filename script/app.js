@@ -1,20 +1,19 @@
-import { storage } from './store.js'; 
+import { storage } from './store.js';
 import { dialog }  from './dialog.js';
+import { triage }  from './triage.js';
+import { ui }      from './ui.js';
+import { demo }    from './demo.js';
 
 window.storage = storage;
 window.dialog = dialog;
+window.triage = triage;
+window.ui = ui;
+window.demo = demo;
 
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', () => {
     console.time("Application started");
 
-    storage.set("teste", "teste");
-    console.log(storage.get("teste"));
-
-    //dialog.show('<h1>olá mundo</h1><p>teste de dialog</p>');
-    // let teste = await dialog.showFile('dialog/confirm.dialog.html', {'title': 'teste', 'content': '<label>teste de dialog</label>'});
-    // console.log (teste);
-
-    dialog.showFile('dialog/newTicket.dialog.html');
+    ui.init();
 
     console.timeEnd("Application started");
 });

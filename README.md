@@ -75,9 +75,11 @@ PI2/
 |
 |-- script/
 |   |-- app.js
+|   |-- demo.js
 |   |-- dialog.js
 |   |-- store.js
-|   '-- triage.js
+|   |-- triage.js
+|   '-- ui.js
 |
 |-- style/
 |   |-- dialog.css
@@ -88,32 +90,47 @@ PI2/
 
 | Arquivo | Responsabilidade atual |
 |---|---|
-| `index.html` | Tela principal da aplicação. Divide o conteúdo entre pacientes aguardando atendimento e pacientes em atendimento. Exibe cinco categorias visuais: Emergência, Muito urgente, Urgente, Pouco urgente e Não urgente. Os cartões atuais são estáticos e funcionam como mockup. |
+| `index.html` | Tela principal da aplicação. Divide o conteúdo entre pacientes aguardando atendimento e pacientes em atendimento. Exibe cinco categorias visuais: Emergência, Muito urgente, Urgente, Pouco urgente e Não urgente. Os cartões são gerados a partir dos tickets salvos e as categorias sem pacientes ficam ocultas. |
 | `dialog/confirm.dialog.html` | Diálogo reutilizável de confirmação. Recebe título, conteúdo e textos dos botões por parâmetros e retorna true ou false pela ponte global de diálogos. |
-| `dialog/newTicket.dialog.html` | Formulário inicial de cadastro. Já contém nome, idade, peso, altura, temperatura, batimentos cardíacos e pressão arterial. A lógica de retorno do objeto ainda está indicada apenas por comentário. |
-| `script/app.js` | Ponto de inicialização. Importa storage e dialog, expõe ambos em window, executa um teste simples de armazenamento e abre automaticamente o diálogo de novo ticket ao carregar a página. |
+| `dialog/newTicket.dialog.html` | Formulário inicial de cadastro. Contém nome, idade, peso, altura, temperatura, batimentos cardíacos e pressão arterial em linhas compactas e, no fim, gravidade escolhida em um slider de 1 a 5 com o nome do nível escolhido ao centro e sintomas em texto livre, ambos em blocos de largura total. Devolve o objeto do ticket pela ponte global de diálogos. |
+| `script/app.js` | Ponto de inicialização. Importa storage, dialog, triage, ui e demo, expõe todos em window e inicia a interface. |
+| `script/demo.js` | Modo de demonstração para a apresentação. Cria pacientes aleatórios com sinais vitais e sintomas coerentes com a gravidade, atende e conclui pacientes aleatórios (respeitando o máximo de 10 atendimentos simultâneos), limpa a fila e executa tudo em loop por meio dos controles exibidos no cabeçalho. Expõe `demo.initDemo()` e `demo.stopDemo()`. |
 | `script/dialog.js` | Componente mais completo do estado atual. Implementa pilha de diálogos, parâmetros, retorno/cancelamento, carregamento de HTML externo, metadados de tamanho e barra, injeção de estilos, execução de scripts internos, foco e fechamento. |
 | `script/store.js` | Abstração para localStorage com prefixo próprio do projeto. Implementa set, get, remove e clear, evitando apagar dados de outros sites ou chaves não pertencentes ao sistema. |
-| `script/triage.js` | Arquivo reservado para a lógica de triagem. Atualmente exporta uma IIFE vazia, portanto o algoritmo de priorização ainda não foi implementado. |
+| `script/triage.js` | Gerência dos tickets. Normaliza e persiste a fila em uma única chave do storage, além de listar, buscar, alterar, remover e mover tickets entre as situações de espera, atendimento e concluído. Pede novos diagnósticos ao usuário pelo diálogo de novo ticket, repassando a ele os parâmetros recebidos. A gravidade é guardada apenas como número de 1 a 5, sendo 5 a emergência. |
+| `script/ui.js` | Interface da triagem. Traduz a gravidade numérica dos tickets para as categorias da tela, desenha os cartões das duas colunas e trata os botões de novo diagnóstico, atender, concluir e remover. Os cartões da fila de espera também podem ser arrastados para a coluna de atendimento. |
 | `style/style.css` | Tema visual geral, layout em duas colunas, botões, cartões, categorias e indicadores de estado. Emergência e Muito urgente possuem animações de destaque. |
 | `style/dialog.css` | Estilos dos diálogos, barra superior, responsividade, formulários e botões. Inclui comportamento específico para telas pequenas. |
+
+## Modo demonstração
+
+Para a apresentação, abra o console do navegador e execute:
+
+```js
+demo.initDemo();          // exibe os botões de demonstração no cabeçalho
+demo.maxAttending = 5;    // opcional: altera o limite padrão de 10 atendimentos simultâneos
+demo.stopDemo();          // esconde os botões e para o modo automático
+```
+
+Os botões permitem criar diagnósticos aleatórios, atender e concluir pacientes aleatórios, limpar a fila e ligar o modo automático, que executa uma ação a cada 1 a 10 segundos.
 
 ## Estado atual do código
 
 ### Componentes já implementados
 
 - **Interface principal da fila:** a estrutura visual das categorias de prioridade e a área de atendimento já estão montadas.
+- **Fila ligada aos dados:** os cartões das duas colunas são desenhados a partir dos tickets salvos, e as categorias vazias são ocultadas.
+- **Gestão dos tickets:** é possível cadastrar, alterar e remover diagnósticos, além de mover um paciente entre a fila de espera e o atendimento.
 - **Sistema reutilizável de diálogos:** é possível abrir HTML externo como diálogo, passar argumentos, retornar valores, cancelar e empilhar múltiplos diálogos.
-- **Persistência básica:** existe uma API de armazenamento local encapsulando localStorage com namespace próprio.
+- **Persistência dos registros:** a fila é gravada em uma única chave do localStorage e é lida de volta ao abrir a página.
 - **Formulário inicial de paciente:** os principais sinais vitais básicos já aparecem na interface de cadastro.
 - **Tema visual e responsividade:** há identidade visual consistente para a tela principal e para diálogos, incluindo adaptação para telas menores.
 
 ### Funcionalidades parciais
 
-- **Cadastro de paciente:** a interface existe, mas o formulário não monta nem retorna um objeto com os dados preenchidos.
-- **Uso do localStorage:** a infraestrutura existe, mas ainda é usada apenas por um teste em app.js; os registros de pacientes não são persistidos.
-- **Fila de atendimento:** a interface demonstra como a fila deve parecer, porém os pacientes exibidos são exemplos fixos no HTML.
-- **Ação de novo registro:** o botão 'Novo diagnostico' existe na tela, mas o código atual não associa o clique a uma ação. O diálogo é aberto automaticamente no carregamento da página.
+- **Gravidade dos tickets:** o nível é escolhido pelo atendente em um slider de 1 a 5, sendo 1 não urgente e 5 emergência, mas ainda não existe classificação automática a partir dos sinais vitais.
+- **Edição de pacientes:** a API permite alterar um ticket, porém a tela ainda não oferece um formulário de edição.
+- **Reavaliação:** um paciente pode ser colocado em atendimento e concluído, mas a fila não é reavaliada com o passar do tempo.
 
 ### Funcionalidades ainda não implementadas
 
@@ -121,10 +138,7 @@ PI2/
 - Pontuação por gravidade, sintomas e tempo de espera.
 - Ordenação e reordenação da fila.
 - Atualização automática pelo tempo de espera.
-- Reavaliação e edição de pacientes.
-- Fluxo de início e término do atendimento.
-- Remoção de registros.
 - Validações do formulário e tratamento de campos obrigatórios além da marcação visual.
-- Persistência estruturada dos registros de pacientes.
+- Exportação e importação manual dos dados.
 
 > Ultima revisão em 22/09/2026, commit `9b6e1f3 (9b6e1f38c23e4cdff30f159cc2beadc0b92b4e07)`.
