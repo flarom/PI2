@@ -32,7 +32,8 @@ class Demo {
         /**
          * Aging: a cada quantos milissegundos de espera o paciente "sobe"
          * um nível de gravidade efetiva. Assim, casos leves que esperam muito
-         * acabam ultrapassando os mais graves e são atendidos.
+         * acabam ultrapassando os mais graves e são atendidos, exceto emergências,
+         * que sempre têm prioridade sobre as demais gravidades.
          * @type {number}
          */
         this.agingInterval = 1000;
@@ -300,9 +301,10 @@ class Demo {
     }
 
     /**
-     * Escolhe, de forma determinística, o próximo ticket a ser atendido: o de
-     * maior gravidade efetiva (gravidade + aging). Em caso de empate, vence
-     * quem chegou primeiro.
+     * Escolhe, de forma determinística, o próximo ticket a ser atendido:
+     * emergências (gravidade 5) têm prioridade absoluta. Entre as demais
+     * gravidades, vence a maior gravidade efetiva (gravidade + aging).
+     * Entre emergências ou em caso de empate, vence quem chegou primeiro.
      * @param {Array<object>} tickets tickets em espera
      * @returns {object} o ticket escolhido
      */
@@ -310,6 +312,13 @@ class Demo {
         const now = Date.now();
 
         return tickets.reduce((best, ticket) => {
+            const isEmergency = ticket.patient.severity === 5;
+            const bestIsEmergency = best.patient.severity === 5;
+
+            if (isEmergency !== bestIsEmergency) {
+                return isEmergency ? ticket : best;
+            }
+
             const diff = this.effectiveSeverity(ticket, now) - this.effectiveSeverity(best, now);
 
             if (diff > 0 || (diff === 0 && ticket.attend.arrivedAt < best.attend.arrivedAt)) {
