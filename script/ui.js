@@ -104,11 +104,7 @@ export const ui = (() => {
         const name = document.createElement('h4');
         name.textContent = ticket.patient.name || 'Sem nome';
 
-        const symptomsLine = document.createElement('p');
-        symptomsLine.className = 'symptoms';
-        symptomsLine.textContent = symptoms || 'Sem informações registradas';
-
-        info.append(name, symptomsLine);
+        info.append(name);
 
         if (vitals.length > 0) {
             const vitalList = document.createElement('ul');
@@ -133,6 +129,12 @@ export const ui = (() => {
             info.append(vitalList);
         }
 
+        const symptomsLine = document.createElement('p');
+        symptomsLine.className = 'symptoms';
+        symptomsLine.textContent = symptoms || 'Sem informações registradas';
+
+        info.append(symptomsLine);
+
         caseRight.append(dot, info);
 
         const caseLeft = document.createElement('div');
@@ -143,6 +145,7 @@ export const ui = (() => {
         primary.textContent = attending ? 'Concluir' : 'Atender';
 
         const remove = document.createElement('button');
+        remove.classList.add("tertiary");
         remove.dataset.action = 'remove';
         remove.textContent = 'Remover';
 

@@ -6,16 +6,37 @@
     --s-300: #dde3e8;
     --s-400: #9aa5ad;
     --s-500: #39424a;
-    --blue: #1474bd;
-    --blue-dark: #0b4a7a;
-    --green: #1b8f7d;
-    --green-dark: #0d6e5f;
-    --red: #bd1414;
-    --red-dark: #7a0b0b;
-    --yellow: #ddbf15;
-    --yellow-dark: #bd8214;
-    --orange: #dd7f15;
-    --orange-dark: #bd5f0b;
+
+    --blue-1: #99c1f1;
+    --blue-2: #62a0ea;
+    --blue-3: #3584e4;
+    --blue-4: #1c71d8;
+    --blue-5: #1a5fb4;
+
+    --green-1: #8ff0a4;
+    --green-2: #57e389;
+    --green-3: #33d17a;
+    --green-4: #2ec27e;
+    --green-5: #26a269;
+
+    --yellow-1: #f9f06b;
+    --yellow-2: #f8e45c;
+    --yellow-3: #f6d32d;
+    --yellow-4: #f5c211;
+    --yellow-5: #e5a50a;
+
+    --orange-1: #ffbe6f;
+    --orange-2: #ffa348;
+    --orange-3: #ff7800;
+    --orange-4: #e66100;
+    --orange-5: #c64600;
+
+    --red-1: #f66151;
+    --red-2: #ed333b;
+    --red-3: #e01b24;
+    --red-4: #c01c28;
+    --red-5: #a51d2d;
+
     --r1: 16px;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-light: 0 2px 3px rgba(0, 0, 0, 0.13);
@@ -42,9 +63,8 @@ body {
 
 header {
     display: flex;
-    background-color: var(--s-100);
-    border-bottom: 1px solid var(--s-300);
-    padding: 10px;
+    padding: 5px;
+    padding-bottom: 0px;
     height: var(--header-height);
     align-items: center;
     justify-content: space-between;
@@ -69,7 +89,6 @@ button {
     padding: 6px 12px;
     border-radius: 12px;
     user-select: none;
-    box-shadow: var(--shadow-light);
 
     &:hover {
         background-color: var(--s-200);
@@ -77,7 +96,7 @@ button {
     }
 
     &:focus {
-        outline: 3px solid var(--blue-dark);
+        outline: 3px solid var(--blue-2);
     }
 
     &:active {
@@ -85,12 +104,22 @@ button {
     }
 
     &.primary {
-        background-color: var(--green-dark);
-        border-color: var(--green);
+        background-color: var(--blue-4);
+        border-color: transparent;
         color: var(--s-100);
 
         &:hover {
-            background-color: var(--green);
+            background-color: var(--blue-3);
+        }
+    }
+
+    &.tertiary {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+
+        &:hover {
+            background-color: var(--s-200);
         }
     }
 
@@ -131,12 +160,12 @@ button {
         font-size: small;
 
         &.active {
-            background-color: var(--blue-dark);
-            border-color: var(--blue);
+            background-color: var(--blue-5);
+            border-color: var(--blue-3);
             color: var(--s-100);
 
             &:hover {
-                background-color: var(--blue);
+                background-color: var(--blue-4);
             }
         }
     }
@@ -150,13 +179,18 @@ label {
 main {
     display: flex;
     height: var(--main-height);
+    padding: 5px;
+    gap: 5px;
 
     .left, .right {
         width: 100%;
         height: 100%;
-        background-color: var(--s-200);
+        background-color: var(--s-100);
         padding: 12px;
         padding-bottom: 0;
+        border-radius: 12px;
+        border: 1px solid var(--s-300);
+        box-shadow: var(--shadow-light);
 
         display: flex;
         flex-direction: column;
@@ -170,7 +204,6 @@ main {
 
             section {
                 width: 100%;
-                max-width: 600px;
 
                 .cases {
                     display: flex;
@@ -181,10 +214,10 @@ main {
                     .case {
                         display: flex;
                         user-select: text;
-                        background-color: var(--s-100);
                         padding: 10px;
                         border-radius: 4px;
-                        box-shadow: var(--shadow-light);
+                        background-color: var(--s-100);
+                        border: 1px solid var(--s-300);
 
                         &[draggable="true"] {
                             cursor: grab;
@@ -220,8 +253,10 @@ main {
                             }
 
                             .symptoms {
+                                margin-top: 16px;
+                                margin-bottom: 8px;
                                 font-size: small;
-                                color: var(--s-400);
+                                max-width: 450px;
                             }
 
                             .vitals {
@@ -248,6 +283,7 @@ main {
                         }
                         .case-left {
                             display: flex;
+                            flex-direction: column;
                             gap: 8px;
                             height: 100%;
                         }
@@ -262,25 +298,25 @@ main {
                             margin-left: 8px;
                             margin-right: 8px;
                             border-radius: 8px;
-                            background-color: var(--blue);
+                            background-color: var(--blue-4);
 
                             &.emergency {
-                                background-color: var(--red);
+                                background-color: var(--red-4);
                                 animation: 1s status-blip-emergency infinite linear;
                             }
                             &.very-urgent {
-                                background-color: var(--orange);
+                                background-color: var(--orange-4);
                                 animation: 2s status-blip-very-urgent infinite linear;
                             }
                             &.urgent {
-                                background-color: var(--yellow);
+                                background-color: var(--yellow-4);
                             }
                             &.slightly-urgent {
-                                background-color: var(--green);
+                                background-color: var(--green-4);
                             }
                             &.not-urgent {
                                 background-color: var(--s-100);
-                                border: 4px solid var(--blue);
+                                border: 4px solid var(--blue-4);
                             }
                         }
                     }
@@ -293,7 +329,7 @@ main {
                 margin-bottom: 12px;
                 position: sticky;
                 top: 0;
-                background-color: var(--s-200);
+                background: linear-gradient(var(--s-100), var(--s-100), transparent);
             }
 
             .empty {
@@ -315,23 +351,23 @@ main {
         }
     }
 
-    .left {
-        border-right: 1px solid var(--s-300);
-    }
     .right {
+        outline-offset: -64px;
+        transition: all .3s;
+
         &.drag-over {
-            outline: 2px dashed var(--blue);
-            outline-offset: -4px;
-            background-color: rgba(20, 116, 189, 0.06);
+            outline: 2px dashed var(--blue-4);
+            outline-offset: -8px;
+            background-color: var(--blue-1);
         }
     }
 }
 
 @keyframes status-blip-emergency {
-    from {box-shadow: 0px 0px 0px 0px #7a0b0baa;}
-    to   {box-shadow: 0px 0px 0px 7px #7a0b0b00;}
+    from {box-shadow: 0px 0px 0px 0px var(--red-1);}
+    to   {box-shadow: 0px 0px 0px 7px transparent;}
 }
 @keyframes status-blip-very-urgent {
-    from {box-shadow: 0px 0px 0px 0px #bd821466;}
-    to   {box-shadow: 0px 0px 0px 5px #bd821400;}
+    from {box-shadow: 0px 0px 0px 0px var(--orange-1);}
+    to   {box-shadow: 0px 0px 0px 5px transparent;}
 }

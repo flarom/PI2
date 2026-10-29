@@ -129,7 +129,8 @@ dialog .toolbar .dialog-window-control:hover {
 }
 
 dialog .toolbar.no-overlay {
-    position: static;
+    position: sticky;
+    background: linear-gradient(var(--s-200), var(--s-200), transparent);
 }
 
 dialog .dialog-content {
@@ -153,12 +154,13 @@ dialog:has(.toolbar.no-overlay) .padding-top {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: revert;
-  margin-top: 12px;
+  padding: 10px;
+  padding-top: 0px;
+  gap: 5px;
 }
 
 .button-row button {
   width: 100%;
-  border-radius: 0px;
   height: 32px;
 }
 
@@ -187,7 +189,7 @@ dialog form {
         &:focus {
             background-color: var(--s-100);
             border-color: transparent;
-            outline: 3px solid var(--green-dark);
+            outline: 3px solid var(--blue-2);
             transform: scale(1.02);
         }
     }
@@ -195,7 +197,7 @@ dialog form {
     input[type="range"] {
         appearance: none;
         -webkit-appearance: none;
-        accent-color: var(--green-dark);
+        accent-color: var(--blue-4);
         background: transparent;
         box-shadow: none;
         border: none;
@@ -211,7 +213,7 @@ dialog form {
         }
 
         &:focus-visible {
-            outline: 3px solid var(--blue-dark);
+            outline: 3px solid var(--blue-2);
             outline-offset: 2px;
             border-radius: 4px;
         }
@@ -229,9 +231,9 @@ dialog form {
             height: 20px;
             width: 20px;
             border-radius: 10px;
-            background-color: var(--green-dark);
+            background-color: var(--blue-3);
             border: none;
-            box-shadow: var(--shadow-light);
+            box-shadow: var(--shadow);
         }
 
         &::-moz-range-track {
@@ -242,7 +244,7 @@ dialog form {
 
         &::-moz-range-progress {
             height: 6px;
-            background-color: var(--green-dark);
+            background-color: var(--blue-4);
             border-radius: 3px;
         }
 
@@ -250,9 +252,9 @@ dialog form {
             height: 20px;
             width: 20px;
             border-radius: 10px;
-            background-color: var(--green-dark);
+            background-color: var(--blue-3);
             border: none;
-            box-shadow: var(--shadow-light);
+            box-shadow: var(--shadow);
         }
     }
 
@@ -271,7 +273,7 @@ dialog form {
         &:focus {
             background-color: var(--s-100);
             border-color: transparent;
-            outline: 3px solid var(--green-dark);
+            outline: 3px solid var(--blue-2);
         }
     }
 
