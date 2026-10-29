@@ -18,7 +18,7 @@
 
 body {
     font-family: "Adwaita Sans", "Ubuntu", Arial, Helvetica, sans-serif;
-    background: var(--view-bg-color);
+    background: var(--overview-bg-color);
     color: var(--window-fg-color);
     min-height: 100vh;
     user-select: none;
