@@ -1,11 +1,11 @@
 /* MARK: Dialogos */
 dialog {
-    color: var(--s-500);
-    background-color: var(--s-200);
-    border: 1px solid var(--s-300);
+    color: var(--dialog-fg-color);
+    background-color: var(--view-bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 20px;
     padding: 0px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-large);
     width: 100%;
     max-width: 400px;
     margin: auto;
@@ -68,7 +68,7 @@ dialog::backdrop {
 }
 
 dialog.nobg::backdrop {
-    background-color: var(--s-100);
+    background-color: var(--window-bg-color);
     animation: none;
 }
 
@@ -121,16 +121,13 @@ dialog .toolbar .dialog-window-control {
     font-size: large;
     font-weight: bold;
     transition: all 0.3s ease;
-    background-color: var(--s-100);
-}
-
-dialog .toolbar .dialog-window-control:hover {
-    background-color: var(--s-300);
+    background-color: var(--card-bg-color);
+    box-shadow: var(--shadow-light);
 }
 
 dialog .toolbar.no-overlay {
     position: sticky;
-    background: linear-gradient(var(--s-200), var(--s-200), transparent);
+    background: linear-gradient(var(--view-bg-color), var(--view-bg-color), transparent);
 }
 
 dialog .dialog-content {
@@ -179,15 +176,16 @@ dialog form {
     }
 
     input {
-        background-color: var(--s-100);
-        border: 1px solid var(--s-300);
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        color: var(--dialog-fg-color);
         padding: 6px 12px;
         border-radius: 12px;
         width: 300px;
         transition: transform 0.3s ease;
 
         &:focus {
-            background-color: var(--s-100);
+            background-color: var(--card-bg-color);
             border-color: transparent;
             outline: 3px solid var(--blue-2);
             transform: scale(1.02);
@@ -220,7 +218,7 @@ dialog form {
 
         &::-webkit-slider-runnable-track {
             height: 6px;
-            background-color: var(--s-300);
+            background-color: var(--border-color);
             border-radius: 3px;
         }
 
@@ -238,7 +236,7 @@ dialog form {
 
         &::-moz-range-track {
             height: 6px;
-            background-color: var(--s-300);
+            background-color: var(--border-color);
             border-radius: 3px;
         }
 
@@ -259,8 +257,9 @@ dialog form {
     }
 
     textarea {
-        background-color: var(--s-100);
-        border: 1px solid var(--s-300);
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        color: var(--card-fg-color);
         padding: 6px 12px;
         border-radius: 12px;
         width: 300px;
@@ -268,10 +267,8 @@ dialog form {
         resize: vertical;
         font-family: inherit;
         font-size: inherit;
-        color: inherit;
 
         &:focus {
-            background-color: var(--s-100);
             border-color: transparent;
             outline: 3px solid var(--blue-2);
         }
@@ -284,7 +281,7 @@ dialog form {
     }
 
     .row {
-        background-color: var(--s-100);
+        background-color: var(--card-bg-color);
         border-radius: 4px;
         box-shadow: var(--shadow-light);
         display: flex;
@@ -319,12 +316,12 @@ dialog form {
             flex: none;
             width: auto;
             display: inline;
-            color: var(--s-400);
+            opacity: var(--dim-opacity);
         }
     }
 
     .block {
-        background-color: var(--s-100);
+        background-color: var(--card-bg-color);
         border-radius: 12px;
         box-shadow: var(--shadow-light);
         padding: 8px;
@@ -343,6 +340,6 @@ dialog form {
         width: 100%;
         text-align: center;
         font-size: medium;
-        color: var(--s-500);
+        opacity: var(--dim-opacity);
     }
 }

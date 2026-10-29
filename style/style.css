@@ -1,48 +1,13 @@
+@import url("./var.css");
+
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded");
 
 :root {
-    --s-100: #ffffff;
-    --s-200: #f4f6f8;
-    --s-300: #dde3e8;
-    --s-400: #9aa5ad;
-    --s-500: #39424a;
-
-    --blue-1: #99c1f1;
-    --blue-2: #62a0ea;
-    --blue-3: #3584e4;
-    --blue-4: #1c71d8;
-    --blue-5: #1a5fb4;
-
-    --green-1: #8ff0a4;
-    --green-2: #57e389;
-    --green-3: #33d17a;
-    --green-4: #2ec27e;
-    --green-5: #26a269;
-
-    --yellow-1: #f9f06b;
-    --yellow-2: #f8e45c;
-    --yellow-3: #f6d32d;
-    --yellow-4: #f5c211;
-    --yellow-5: #e5a50a;
-
-    --orange-1: #ffbe6f;
-    --orange-2: #ffa348;
-    --orange-3: #ff7800;
-    --orange-4: #e66100;
-    --orange-5: #c64600;
-
-    --red-1: #f66151;
-    --red-2: #ed333b;
-    --red-3: #e01b24;
-    --red-4: #c01c28;
-    --red-5: #a51d2d;
-
-    --r1: 16px;
+    --header-height: 50px;
+    --main-height: calc(100vh - var(--header-height));
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-light: 0 2px 3px rgba(0, 0, 0, 0.13);
-
-    --header-height: 50px;
-    --main-height: calc(100vh - var(--header-height))
+    --shadow-large: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -52,9 +17,9 @@
 }
 
 body {
-    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
-    background: var(--s-200);
-    color: var(--s-500);
+    font-family: "Adwaita Sans", "Ubuntu", Arial, Helvetica, sans-serif;
+    background: var(--view-bg-color);
+    color: var(--window-fg-color);
     min-height: 100vh;
     user-select: none;
 }
@@ -84,19 +49,19 @@ header {
 /* BOTAO */
 
 button {
-    background-color: var(--s-300);
-    border: 1px solid var(--s-400);
+    background-color: var(--card-bg-color);
+    color: var(--card-fg-color);
+    border: 1px solid var(--border-color);
     padding: 6px 12px;
     border-radius: 12px;
     user-select: none;
 
     &:hover {
-        background-color: var(--s-200);
-        border-color: var(--s-300);
+        filter: brightness(1.1);
     }
 
     &:focus {
-        outline: 3px solid var(--blue-2);
+        outline: 3px solid var(--accent-color);
     }
 
     &:active {
@@ -104,12 +69,12 @@ button {
     }
 
     &.primary {
-        background-color: var(--blue-4);
+        background-color: var(--accent-bg-color);
         border-color: transparent;
-        color: var(--s-100);
+        color: var(--accent-fg-color);
 
         &:hover {
-            background-color: var(--blue-3);
+            filter: brightness(1.1);
         }
     }
 
@@ -119,7 +84,7 @@ button {
         box-shadow: none;
 
         &:hover {
-            background-color: var(--s-200);
+            background-color: var(--popover-bg-color);
         }
     }
 
@@ -142,8 +107,7 @@ button {
         cursor: not-allowed;
 
         &:hover {
-            background-color: var(--s-300);
-            border-color: var(--s-400);
+            background-color: var(--popover-bg-color);
         }
     }
 }
@@ -160,12 +124,11 @@ button {
         font-size: small;
 
         &.active {
-            background-color: var(--blue-5);
-            border-color: var(--blue-3);
-            color: var(--s-100);
+            background-color: var(--accent-bg-color);
+            color: var(--accent-fg-color);
 
             &:hover {
-                background-color: var(--blue-4);
+                filter: brightness(1.1);
             }
         }
     }
@@ -185,11 +148,11 @@ main {
     .left, .right {
         width: 100%;
         height: 100%;
-        background-color: var(--s-100);
+        background-color: var(--window-bg-color);
         padding: 12px;
         padding-bottom: 0;
         border-radius: 12px;
-        border: 1px solid var(--s-300);
+        border: 1px solid var(--border-color);
         box-shadow: var(--shadow-light);
 
         display: flex;
@@ -216,8 +179,8 @@ main {
                         user-select: text;
                         padding: 10px;
                         border-radius: 4px;
-                        background-color: var(--s-100);
-                        border: 1px solid var(--s-300);
+                        background-color: var(--card-bg-color);
+                        border: 1px solid var(--border-color);
 
                         &[draggable="true"] {
                             cursor: grab;
@@ -271,12 +234,12 @@ main {
                                     gap: 4px;
                                     padding: 2px 8px;
                                     border-radius: 8px;
-                                    background-color: var(--s-200);
-                                    border: 1px solid var(--s-300);
+                                    background-color: var(--card-bg-color);
+                                    border: 1px solid var(--border-color);
                                     font-size: small;
 
                                     .vital-name {
-                                        color: var(--s-400);
+                                        color: var(--view-fg-color);
                                     }
                                 }
                             }
@@ -315,7 +278,7 @@ main {
                                 background-color: var(--green-4);
                             }
                             &.not-urgent {
-                                background-color: var(--s-100);
+                                background-color: var(--view-bg-color);
                                 border: 4px solid var(--blue-4);
                             }
                         }
@@ -329,14 +292,14 @@ main {
                 margin-bottom: 12px;
                 position: sticky;
                 top: 0;
-                background: linear-gradient(var(--s-100), var(--s-100), transparent);
+                background: linear-gradient(var(--window-bg-color), var(--window-bg-color), transparent);
             }
 
             .empty {
                 width: 100%;
                 max-width: 600px;
                 text-align: center;
-                color: var(--s-400);
+                opacity: var(--dim-opacity);
             }
 
             #attending {
@@ -352,19 +315,16 @@ main {
     }
 
     .right {
-        outline-offset: -64px;
-        transition: all .3s;
+        transition: background-color .3s;
 
         &.drag-over {
-            outline: 2px dashed var(--blue-4);
-            outline-offset: -8px;
             background-color: var(--blue-1);
         }
     }
 }
 
 @keyframes status-blip-emergency {
-    from {box-shadow: 0px 0px 0px 0px var(--red-1);}
+    from {box-shadow: 0px 0px 0px 0px var(--red-2);}
     to   {box-shadow: 0px 0px 0px 7px transparent;}
 }
 @keyframes status-blip-very-urgent {
