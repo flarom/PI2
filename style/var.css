@@ -97,6 +97,9 @@ body {
     --shade-color: rgb(0 0 6 / 7%);
     --scrollbar-outline-color: #ffffff;
 
+    /* Hover */
+    --hover-color: rgb(0 0 6 / 7%);
+
     --blue-1: #99c1f1;
     --blue-2: #62a0ea;
     --blue-3: #3584e4;
@@ -227,6 +230,9 @@ body.dark {
     /* Borders and Shadows */
     --shade-color: rgb(0 0 6 / 25%);
     --scrollbar-outline-color: rgb(0 0 6 / 50%);
+
+    /* Hover */
+    --hover-color: rgb(249 249 255 / 7%);
 
     --blue-5: #99c1f1;
     --blue-4: #62a0ea;

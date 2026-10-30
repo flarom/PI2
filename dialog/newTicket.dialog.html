@@ -104,8 +104,9 @@ Exibe um formulario para cadastrar um novo ticket.
             severity.addEventListener('input', () => {
                 markLevel(severity.value);
             });
-
             markLevel(severity.value);
+            
+            document.getElementById('new-ticket-patName').focus();
 
             document.getElementById('new-ticket-button-confirm').addEventListener('click', () => {
                 const ticket = {

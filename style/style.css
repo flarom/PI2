@@ -1,7 +1,5 @@
 @import url("./var.css");
 
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded");
-
 :root {
     --header-height: 50px;
     --main-height: calc(100vh - var(--header-height));
@@ -37,6 +35,7 @@ header {
     .left {
         display: flex;
         align-items: center;
+        gap: 8px;
     }
     .right {
         display: flex;
@@ -57,7 +56,7 @@ button {
     user-select: none;
 
     &:hover {
-        filter: brightness(1.1);
+        background-color: var(--hover-color);
     }
 
     &:focus {
@@ -74,7 +73,7 @@ button {
         color: var(--accent-fg-color);
 
         &:hover {
-            filter: brightness(1.1);
+            filter: brightness(0.9);
         }
     }
 
@@ -84,22 +83,34 @@ button {
         box-shadow: none;
 
         &:hover {
-            background-color: var(--popover-bg-color);
+            background-color: var(--hover-color);
         }
     }
 
     &.icon {
-        font-size: x-large;
-        font-family: "Material Symbols Rounded";
+        --icon-size: 16px;
+
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        outline: none;
-        background: none;
+
+        background-color: transparent;
         border: none;
-        transition: all 0.3s ease;
-        border-radius: 8px;
-        height: 30px;
+
+        padding: 6px;
+
+        svg {
+            width: var(--icon-size);
+            height: var(--icon-size);
+            flex: none;
+            display: block;
+            fill: currentColor;
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: var(--hover-color);
+        }
     }
 
     &:disabled {
@@ -107,7 +118,7 @@ button {
         cursor: not-allowed;
 
         &:hover {
-            background-color: var(--popover-bg-color);
+            background-color: var(--hover-color);
         }
     }
 }
@@ -128,7 +139,7 @@ button {
             color: var(--accent-fg-color);
 
             &:hover {
-                filter: brightness(1.1);
+                background-color: var(--hover-color);
             }
         }
     }

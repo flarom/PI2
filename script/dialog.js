@@ -170,8 +170,10 @@ export const dialog = (() => {
         right.innerHTML = toolbarRight;
 
         const closeButton = document.createElement("button");
-        closeButton.textContent = "close";
+        closeButton.type = "button";
+        closeButton.setAttribute("aria-label", "Fechar");
         closeButton.className = "icon dialog-window-control";
+        closeButton.innerHTML = `<svg><use href="./media/icon/symbolic.svg#close"></use></svg>`;
 
         if (showCloseButton) {
             right.appendChild(closeButton);

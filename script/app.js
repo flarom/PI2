@@ -16,4 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ui.init();
 
     console.timeEnd("Application started");
+
+    let theme = storage.get("theme", "light");
+    document.body.classList.add(theme);
 });
