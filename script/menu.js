@@ -1,53 +1,3 @@
-/**
- * # Menu
- * Interface para a API de menus, no mesmo estilo do `dialog.js`.
- *
- * Menus são arquivos `.menu.html` carregados sob demanda. Cada arquivo pode
- * declarar seus próprios `<style>`, `<link rel="stylesheet">` e `<script>`,
- * resolvidos a partir do caminho do próprio menu.
- *
- * Uso:
- * - `menu.open("menu/main.menu.html", "botao", menu.position.bottomLeft)`
- *   abre o menu ancorado a um elemento;
- * - `menu.open("menu/main.menu.html", menu.position.cursor)`
- *   abre o menu na posição do cursor;
- * - `menu.open("menu/main.menu.html", "botao", menu.position["bottom-left"])`
- *   também funciona (a forma com hífen precisa de colchetes em JavaScript).
- * - Chamar `menu.open` de novo com o mesmo arquivo e o mesmo elemento ancora
- *   fecha o menu (alterna). `menu.toggle(...)` é um apelido para esse uso.
- *
- * Interação (estilo menu de desktop):
- * - o `mousedown` no gatilho abre o menu (e o alterna se já estiver aberto);
- * - itens são ativados no `mouseup`, não no `click`;
- * - manter o ponteiro por 500 ms sobre um item com submenu abre o submenu;
- * - como a ativação acontece no `mouseup`, dá para pressionar o gatilho,
- *   arrastar até um item e soltar para escolhê-lo em um único gesto.
- *
- * Itens:
- * - `<button>` vira um item normal;
- * - `<button class="destructive">` vira um item destrutivo;
- * - `<div class="icon-row"><button class="icon">...</button></div>` cria uma
- *   fileira horizontal de botões de ícone;
- * - `<hr>` cria um separador.
- *
- * Submenus:
- * - `<button data-submenu="outro.menu.html">` abre outro arquivo de menu ao
- *   lado do item. O caminho é relativo ao arquivo do menu atual;
- * - `data-submenu-position="left"` (ou outra posição) altera o lado.
- *
- * Ativação:
- * - itens sem `data-menu-return` disparam um evento `menuactivate` (cancelável)
- *   no próprio item, com `detail: { menu, item, originalEvent }`;
- * - `data-menu-return="valor"` fecha o menu inteiro retornando esse texto sem
- *   precisar de JavaScript;
- * - teclado continua funcionando: `click` com `detail === 0` ativa o item.
- *
- * Retorno:
- * - `window.menuArgs()`        -> argumentos do menu do topo;
- * - `window.menuReturn(value)` -> fecha o menu inteiro retornando `value`;
- * - `window.menuCancel(value)` -> fecha o menu inteiro cancelando;
- * - `window.menuClose()`       -> fecha apenas o menu do topo.
- */
 export const menu = (() => {
     const MENU_POSITIONS = new Set([
         "top-left",
@@ -128,6 +78,13 @@ export const menu = (() => {
             window.menuArgs = () => {
                 const controller = getTopController();
                 return controller ? controller.args : {};
+            };
+        }
+
+        if (typeof window.menuElement !== "function") {
+            window.menuElement = () => {
+                const controller = getTopController();
+                return controller ? controller.element : null;
             };
         }
 
@@ -250,6 +207,16 @@ export const menu = (() => {
             };
         }
 
+        if (isPlainObject(targetOrPosition)) {
+            // menu.open("arquivo.menu.html", { ...args })
+            return {
+                anchor: cursorAnchor(),
+                placement: position.cursor,
+                args: targetOrPosition,
+                parent: null
+            };
+        }
+
         if (targetOrPosition == null || isPosition(targetOrPosition)) {
             const requestedPosition = isPosition(targetOrPosition) ? targetOrPosition : position.cursor;
 
@@ -271,11 +238,12 @@ export const menu = (() => {
         const requestedPosition = isPosition(positionOrArgs)
             ? positionOrArgs
             : (parent ? position.right : position.bottomLeft);
+        const inheritedArgs = parent && isPlainObject(parent.args) ? { ...parent.args } : {};
 
         return {
             anchor: { type: "element", element: target },
             placement: requestedPosition,
-            args: isPlainObject(positionOrArgs) ? positionOrArgs : (isPlainObject(args) ? args : {}),
+            args: isPlainObject(positionOrArgs) ? positionOrArgs : (isPlainObject(args) ? args : inheritedArgs),
             parent
         };
     }
@@ -361,8 +329,8 @@ export const menu = (() => {
         }
     }
 
-    function sameMenuPath(first, second) {
-        return normalizeMenuPath(first) === normalizeMenuPath(second);
+    function fileSourceKey(filePath) {
+        return `file:${normalizeMenuPath(filePath)}`;
     }
 
     function findOpenRoot(filePath, anchor) {
@@ -370,16 +338,18 @@ export const menu = (() => {
             return null;
         }
 
+        const wantedSource = fileSourceKey(filePath);
+
         return menuStack.find((controller) => (
             !controller.parent &&
             controller.anchor &&
             controller.anchor.type === "element" &&
             controller.anchor.element === anchor.element &&
-            sameMenuPath(controller.path, filePath)
+            controller.sourceKey === wantedSource
         )) || null;
     }
 
-    function findOpenChild(parent, trigger, filePath = null) {
+    function findOpenChild(parent, trigger, sourceKey = null) {
         if (!parent || !(trigger instanceof Element)) {
             return null;
         }
@@ -388,7 +358,7 @@ export const menu = (() => {
             child.anchor &&
             child.anchor.type === "element" &&
             child.anchor.element === trigger &&
-            (filePath == null || sameMenuPath(child.path, filePath))
+            (sourceKey == null || child.sourceKey === sourceKey)
         )) || null;
     }
 
@@ -493,6 +463,55 @@ export const menu = (() => {
         return true;
     }
 
+    function getInlineSubmenuName(value) {
+        if (typeof value !== "string") {
+            return null;
+        }
+
+        const trimmed = value.trim();
+
+        if (!trimmed) {
+            return null;
+        }
+
+        return trimmed.startsWith("#") ? trimmed.slice(1) : trimmed;
+    }
+
+    function findInlineSubmenuTemplate(controller, value) {
+        const name = getInlineSubmenuName(value);
+
+        if (!name) {
+            return null;
+        }
+
+        const templates = controller.element.querySelectorAll("template");
+
+        for (const template of templates) {
+            if (template.id === name || template.dataset.menuTemplate === name) {
+                return template;
+            }
+        }
+
+        return null;
+    }
+
+    function resolveSubmenuArgs(trigger, parentArgs) {
+        const baseArgs = isPlainObject(parentArgs) ? { ...parentArgs } : {};
+        const rawArgs = trigger.getAttribute("data-submenu-args");
+
+        if (!rawArgs) {
+            return baseArgs;
+        }
+
+        try {
+            const extraArgs = JSON.parse(rawArgs);
+            return isPlainObject(extraArgs) ? { ...baseArgs, ...extraArgs } : baseArgs;
+        } catch (error) {
+            console.error(`[menu] data-submenu-args inválido: ${rawArgs}`, error);
+            return baseArgs;
+        }
+    }
+
     async function openSubmenuFromTrigger(controller, trigger) {
         if (
             !controller ||
@@ -504,27 +523,46 @@ export const menu = (() => {
             return null;
         }
 
-        const submenuPath = trigger.getAttribute("data-submenu");
+        const submenuValue = trigger.getAttribute("data-submenu");
 
-        if (!submenuPath) {
+        if (!submenuValue) {
             return null;
         }
 
         clearSubmenuOpenTimer(controller);
         clearSubmenuCloseTimer(controller);
 
-        const resolvedPath = new URL(submenuPath, controller.baseUrl).toString();
-        const existingChild = findOpenChild(controller, trigger, resolvedPath);
+        const requestedPosition = trigger.getAttribute("data-submenu-position");
+        const placement = isPosition(requestedPosition) ? requestedPosition : position.right;
+        const submenuArgs = resolveSubmenuArgs(trigger, controller.args);
+        const inlineTemplate = findInlineSubmenuTemplate(controller, submenuValue);
+
+        if (inlineTemplate) {
+            const templateKey = inlineTemplate.id || inlineTemplate.dataset.menuTemplate || "inline";
+            const sourceKey = `inline:${templateKey}`;
+            const existingChild = findOpenChild(controller, trigger, sourceKey);
+
+            if (existingChild) {
+                return existingChild;
+            }
+
+            return openInlineSubmenu(controller, trigger, inlineTemplate, placement, submenuArgs);
+        }
+
+        if (submenuValue.trim().startsWith("#")) {
+            console.error(`[menu] Template de submenu não encontrado: ${submenuValue}`);
+            return null;
+        }
+
+        const resolvedPath = new URL(submenuValue, controller.baseUrl).toString();
+        const existingChild = findOpenChild(controller, trigger, fileSourceKey(resolvedPath));
 
         if (existingChild) {
             return existingChild;
         }
 
-        const requestedPosition = trigger.getAttribute("data-submenu-position");
-        const placement = isPosition(requestedPosition) ? requestedPosition : position.right;
-
         try {
-            return await openChildMenu(controller, trigger, resolvedPath, placement, {});
+            return await openChildMenu(controller, trigger, resolvedPath, placement, submenuArgs);
         } catch (error) {
             console.error(error);
             return null;
@@ -679,24 +717,36 @@ export const menu = (() => {
         }, true);
     }
 
-    function createController({ html, baseUrl, args, parent, anchor, placement, path }) {
-        const doc = new DOMParser().parseFromString(html, "text/html");
+    function createController({ html = null, content = null, baseUrl, args, parent, anchor, placement, path, sourceKey = null }) {
         const menuId = createMenuId();
-        const injectedStyles = injectStyles(doc, menuId, baseUrl);
+        let source;
+        let contentSource;
 
-        const scripts = Array.from(doc.querySelectorAll("script"));
+        if (content) {
+            source = document.createElement("div");
+            source.append(content);
+            contentSource = source;
+        } else {
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            source = doc;
+            contentSource = doc.body;
+        }
+
+        const injectedStyles = injectStyles(source, menuId, baseUrl);
+
+        const scripts = Array.from(source.querySelectorAll("script"));
         scripts.forEach((script) => script.remove());
 
         const element = document.createElement("div");
         element.className = "menu";
         element.dataset.menu = "";
         element.dataset.menuId = menuId;
-        element.dataset.menuPath = path;
+        element.dataset.menuPath = path || "";
         element.setAttribute("role", "menu");
         element.setAttribute("aria-orientation", "vertical");
         element.tabIndex = -1;
         element.style.visibility = "hidden";
-        element.append(...doc.body.childNodes);
+        element.append(...contentSource.childNodes);
 
         element.querySelectorAll("button:not([role])").forEach((button) => {
             button.setAttribute("role", "menuitem");
@@ -719,6 +769,7 @@ export const menu = (() => {
             id: menuId,
             element,
             path,
+            sourceKey: sourceKey || fileSourceKey(path),
             baseUrl,
             args,
             parent,
@@ -813,7 +864,38 @@ export const menu = (() => {
             parent,
             anchor: { type: "element", element: trigger },
             placement,
-            path: filePath
+            path: filePath,
+            sourceKey: fileSourceKey(filePath)
+        });
+    }
+
+    function openInlineSubmenu(parent, trigger, template, placement, args) {
+        if (!parent || parent.closed) {
+            return null;
+        }
+
+        clearSubmenuOpenTimer(parent);
+        clearSubmenuCloseTimer(parent);
+
+        const templateKey = template.id || template.dataset.menuTemplate || "inline";
+        const content = template.content.cloneNode(true);
+
+        parent.childRequestToken += 1;
+        closeChildren(parent, null, "switch", false);
+
+        if (parent.closed || !trigger.isConnected) {
+            return null;
+        }
+
+        return createController({
+            content,
+            baseUrl: parent.baseUrl,
+            args,
+            parent,
+            anchor: { type: "element", element: trigger },
+            placement,
+            path: `#${templateKey}`,
+            sourceKey: `inline:${templateKey}`
         });
     }
 
@@ -1119,14 +1201,23 @@ export const menu = (() => {
      * Se o mesmo arquivo já estiver aberto no mesmo elemento ancora, o menu é
      * fechado em vez de reaberto (comportamento de alternância).
      *
+     * Formas de chamada:
+     * - `open(caminho, alvo, posicao?, args?)`
+     * - `open(caminho, evento, args?)`
+     * - `open(caminho, posicao, args?)`
+     * - `open(caminho, args)` (abre no cursor)
+     *
+     * Submenus herdam os argumentos do menu pai quando nenhum argumento novo
+     * é informado.
+     *
      * @param {string} filePath                   caminho do arquivo do menu
-     * @param {string|HTMLElement|Event} [targetOrPosition] id/elemento alvo ou uma posição
-     * @param {string|object} [positionOrArgs]    posição (quando há alvo) ou argumentos (no cursor)
+     * @param {string|HTMLElement|Event|object} [targetOrPosition] alvo, evento, posição ou argumentos
+     * @param {string|object} [positionOrArgs]    posição (quando há alvo) ou argumentos
      * @param {object} [args]                     argumentos extras entregues a `window.menuArgs()`
      * @returns {Promise<*>} promessa com o valor retornado por `window.menuReturn`
      *                       ou `null` ao fechar/cancelar
      */
-    async function open(filePath, targetOrPosition = position.cursor, positionOrArgs = null, args = {}) {
+    async function open(filePath, targetOrPosition = position.cursor, positionOrArgs = null, args = null) {
         ensureMenuBridge();
         ensureGlobalListeners();
 
@@ -1137,7 +1228,7 @@ export const menu = (() => {
         const spec = resolveOpenSpec(targetOrPosition, positionOrArgs, args);
 
         if (spec.parent) {
-            const existingChild = findOpenChild(spec.parent, spec.anchor.element, filePath);
+            const existingChild = findOpenChild(spec.parent, spec.anchor.element, fileSourceKey(filePath));
 
             if (existingChild) {
                 closeController(existingChild, null, "toggle");
@@ -1192,12 +1283,12 @@ export const menu = (() => {
      * o arquivo e o elemento ancora são os mesmos do menu já aberto.
      *
      * @param {string} filePath                   caminho do arquivo do menu
-     * @param {string|HTMLElement|Event} [targetOrPosition] id/elemento alvo ou uma posição
-     * @param {string|object} [positionOrArgs]    posição (quando há alvo) ou argumentos (no cursor)
+     * @param {string|HTMLElement|Event|object} [targetOrPosition] alvo, evento, posição ou argumentos
+     * @param {string|object} [positionOrArgs]    posição (quando há alvo) ou argumentos
      * @param {object} [args]                     argumentos extras entregues a `window.menuArgs()`
      * @returns {Promise<*>} promessa do menu
      */
-    function toggle(filePath, targetOrPosition = position.cursor, positionOrArgs = null, args = {}) {
+    function toggle(filePath, targetOrPosition = position.cursor, positionOrArgs = null, args = null) {
         return open(filePath, targetOrPosition, positionOrArgs, args);
     }
 

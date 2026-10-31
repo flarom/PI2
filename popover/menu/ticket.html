@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<!--
+# Ticket context menu
+Menu de contexto único para cartões da fila e do atendimento. O script abaixo
+lê `attending` de `window.menuArgs()` e desabilita a ação que não se aplica.
+-->
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu do paciente</title>
+</head>
+<body>
+    <button type="button" data-menu-return="start">
+        <span>Atender</span>
+    </button>
+
+    <button type="button" data-menu-return="finish">
+        <span>Concluir</span>
+    </button>
+
+    <hr>
+
+    <button type="button" class="destructive" data-menu-return="remove">
+        <span>Remover</span>
+    </button>
+
+    <script>
+        (() => {
+            const { attending = false } = window.menuArgs();
+            const start = window.menuElement().querySelector('[data-menu-return="start"]');
+            const finish = window.menuElement().querySelector('[data-menu-return="finish"]');
+
+            if (start) {
+                start.disabled = Boolean(attending);
+            }
+
+            if (finish) {
+                finish.disabled = !attending;
+            }
+        })();
+    </script>
+</body>
+</html>

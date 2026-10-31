@@ -156,16 +156,11 @@ export const ui = (() => {
 
         card.addEventListener('contextmenu', async event => {
             event.preventDefault();
-            
-            let action;
 
-            if (ticket.attend.status == 0) {
-                action = await menu.open('./menu/startTicket.contextmenu.html')
-            } else {
-                action = await menu.open('./menu/finishTicket.contextmenu.html')
-            }
-            
-            handleAction(ticket.uid, action)
+            const attending = ticket.attend.status != 0;
+            const action = await menu.open('./popover/menu/ticket.html', event, { attending });
+
+            handleAction(ticket.uid, action);
         });
 
         return card;
@@ -243,7 +238,7 @@ export const ui = (() => {
         }
 
         if (action === 'remove') {
-            const confirmed = await dialog.showFile('dialog/confirm.dialog.html', {
+            const confirmed = await dialog.showFile('popover/dialog/confirm.html', {
                 title: 'Remover paciente',
                 content: `<label>Remover <strong>${cleanUp(ticket.patient.name || 'sem nome')}</strong> da fila de atendimento?</label>`,
                 yesText: 'Remover',

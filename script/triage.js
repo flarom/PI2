@@ -22,7 +22,7 @@ import { dialog } from './dialog.js';
  */
 export const triage = (() => {
     const ticketsKey = 'tickets';
-    const newTicketDialog = 'dialog/newTicket.dialog.html';
+    const newTicketDialog = 'popover/dialog/newTicket.html';
     const maxSeverity = 5;
 
     /**

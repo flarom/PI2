@@ -11,6 +11,7 @@ dialog {
     margin: auto;
     animation: showdialog 0.5s ease-in-out forwards;
     outline: none;
+    scrollbar-color: var(--border-color) transparent;
 }
 
 @keyframes showdialog {
@@ -186,7 +187,7 @@ dialog:has(.toolbar.no-overlay) .padding-top {
   height: 32px;
 }
 
-dialog form {
+dialog form, dialog .form {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -228,7 +229,6 @@ dialog form {
         width: 100%;
         height: 20px;
         margin: 4px 0px;
-        cursor: pointer;
 
         &:focus {
             background: transparent;
