@@ -106,17 +106,19 @@ button {
         justify-content: center;
 
         width: 30px;
+        height: 30px;
+        padding: 0;
 
         background-color: transparent;
         border: none;
 
-        padding: 6px;
-
         svg {
+            display: block;
+            flex: 0 0 var(--icon-size);
+
             width: var(--icon-size);
             height: var(--icon-size);
-            flex: none;
-            display: block;
+
             fill: currentColor;
             pointer-events: none;
         }

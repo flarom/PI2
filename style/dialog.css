@@ -124,7 +124,7 @@ dialog .toolbar .dialog-window-control {
     transition: all 0.3s ease;
     background-color: var(--card-bg-color);
 
-    --icon-size: 16px;
+    --icon-size: 18px;
     --icon-button-size: 32px;
 
     display: inline-flex;
@@ -142,8 +142,6 @@ dialog .toolbar .dialog-window-control {
     svg {
         width: var(--icon-size);
         height: var(--icon-size);
-        flex: none;
-        display: block;
         fill: currentColor;
         pointer-events: none;
     }

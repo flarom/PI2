@@ -13,8 +13,8 @@ Exemplo de menu de ações da aplicação, com um submenu declarado inline.
 </head>
 <body>
     <button type="button" data-menu-return="null" onmouseup="dialog.showFile('./popover/dialog/newTicket.html')">
-        <span>Novo diagnóstico</span>
-        <span class="menu-shortcut">Ctrl+N</span>
+        <span>Novo diagnóstico…</span>
+        <span class="menu-shortcut">Ctrl+D</span>
     </button>
 
     <button type="button" data-submenu="#theme-menu">
@@ -23,10 +23,12 @@ Exemplo de menu de ações da aplicação, com um submenu declarado inline.
 
     <template id="theme-menu">
         <button type="button" class="theme-light" data-theme="light">
+            <svg><use href="./media/icon/symbolic.svg#sun"></use></svg>
             <span>Claro</span>
         </button>
 
         <button type="button" class="theme-dark" data-theme="dark">
+            <svg><use href="./media/icon/symbolic.svg#moon"></use></svg>
             <span>Escuro</span>
         </button>
 
@@ -51,16 +53,6 @@ Exemplo de menu de ações da aplicação, com um submenu declarado inline.
     </template>
 
     <hr>
-
-    <button type="button" data-menu-return="null" onmouseup="dialog.showFile('./popover/dialog/preferences.html')">
-        <span>Preferências</span>
-        <span class="menu-shortcut">Ctrl+,</span>
-    </button>
-
-    <button type="button" data-menu-return="keyboard-shortcuts">
-        <span>Atalhos de teclado</span>
-        <span class="menu-shortcut">Ctrl+?</span>
-    </button>
 
     <button type="button" data-menu-return="about">
         <span>Sobre o PI2</span>

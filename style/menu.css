@@ -78,6 +78,7 @@
 
 .menu button:not(.icon):disabled {
     opacity: var(--disabled-opacity);
+    cursor: default;
 }
 
 .menu button:not(.icon):disabled:hover {
@@ -165,7 +166,7 @@
     cursor: default;
 }
 
-.menu .icon-row svg {
+.menu svg {
     width: 16px;
     height: 16px;
     flex: none;

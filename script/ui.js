@@ -145,11 +145,13 @@ export const ui = (() => {
         const primary = document.createElement('button');
         primary.dataset.action = attending ? 'finish' : 'start';
         primary.textContent = attending ? 'Concluir' : 'Atender';
+        primary.tabIndex = 1;
 
         const remove = document.createElement('button');
         remove.classList.add("destructive");
         remove.dataset.action = 'remove';
         remove.textContent = 'Remover';
+        remove.tabIndex = 1;
 
         caseLeft.append(primary, remove);
         card.append(caseRight, caseLeft);
