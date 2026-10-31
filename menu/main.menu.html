@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<!--
+# Main menu
+Exemplo de menu de ações da aplicação.
+-->
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu principal</title>
+</head>
+<body>
+    <button type="button" data-menu-return="null" onmouseup="dialog.showFile('./dialog/newTicket.dialog.html')">
+        <span>Novo diagnóstico</span>
+        <span class="menu-shortcut">Ctrl+N</span>
+    </button>
+
+    <button type="button" data-submenu="theme.menu.html">
+        <span>Tema</span>
+    </button>
+
+    <hr>
+
+    <button type="button" data-menu-return="null" onmouseup="dialog.showFile('./dialog/preferences.dialog.html')">
+        <span>Preferências</span>
+        <span class="menu-shortcut">Ctrl+,</span>
+    </button>
+
+    <button type="button" data-menu-return="keyboard-shortcuts">
+        <span>Atalhos de teclado</span>
+        <span class="menu-shortcut">Ctrl+?</span>
+    </button>
+
+    <button type="button" data-menu-return="about">
+        <span>Sobre o PI2</span>
+    </button>
+</body>
+</html>

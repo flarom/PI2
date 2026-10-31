@@ -111,19 +111,21 @@ export const ui = (() => {
             vitalList.className = 'vitals';
 
             vitals.forEach(([label, tooltip, value]) => {
-                const item = document.createElement('li');
-                item.title = `${tooltip}`;
+                if (value != null){
+                    const item = document.createElement('li');
+                    item.title = `${tooltip}`;
+                    
+                    const itemLabel = document.createElement('span');
+                    itemLabel.className = 'vital-name';
+                    itemLabel.textContent = label;
 
-                const itemLabel = document.createElement('span');
-                itemLabel.className = 'vital-name';
-                itemLabel.textContent = label;
-
-                const itemValue = document.createElement('span');
-                itemValue.className = 'vital-value';
-                itemValue.textContent = value;
-
-                item.append(itemLabel, itemValue);
-                vitalList.append(item);
+                    const itemValue = document.createElement('span');
+                    itemValue.className = 'vital-value';
+                    itemValue.textContent = value;
+                    
+                    item.append(itemLabel, itemValue);
+                    vitalList.append(item);
+                }
             });
 
             info.append(vitalList);
@@ -145,12 +147,26 @@ export const ui = (() => {
         primary.textContent = attending ? 'Concluir' : 'Atender';
 
         const remove = document.createElement('button');
-        remove.classList.add("tertiary");
+        remove.classList.add("destructive");
         remove.dataset.action = 'remove';
         remove.textContent = 'Remover';
 
         caseLeft.append(primary, remove);
         card.append(caseRight, caseLeft);
+
+        card.addEventListener('contextmenu', async event => {
+            event.preventDefault();
+            
+            let action;
+
+            if (ticket.attend.status == 0) {
+                action = await menu.open('./menu/startTicket.contextmenu.html')
+            } else {
+                action = await menu.open('./menu/finishTicket.contextmenu.html')
+            }
+            
+            handleAction(ticket.uid, action)
+        });
 
         return card;
     }

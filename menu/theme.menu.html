@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<!--
+# Theme menu
+Submenu de exemplo: demonstra um arquivo .menu.html com <style> e <script>
+próprios, além de usar a ponte global window.menuReturn().
+-->
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema</title>
+</head>
+<body>
+    <button type="button" class="theme-light" data-theme="light">
+        <span>Claro</span>
+    </button>
+
+    <button type="button" class="theme-dark" data-theme="dark">
+        <span>Escuro</span>
+    </button>
+
+    <script>
+        (() => {
+            document.querySelectorAll("[data-theme]").forEach((button) => {
+                button.addEventListener("menuactivate", () => {
+                    const theme = button.dataset.theme;
+
+                    storage.set('theme', theme);
+
+                    document.body.classList.remove("light", "dark");
+                    document.body.classList.add(theme);
+
+                    window.menuReturn(theme);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

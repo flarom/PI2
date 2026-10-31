@@ -9,14 +9,40 @@ Exibe um dialogo de configurações.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preferencias</title>
+    <title>Preferências</title>
     <meta name="dialog-prefered-width" content="630">
-    <meta name="dialog-toolbar-center" content="<label>Preferencias</label>">
+    <meta name="dialog-toolbar-center" content="<label>Preferências</label>">
     <meta name="dialog-toolbar-overlay" content="false">
+
+    <style>
+        .theme-carousel {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            overflow-x: scroll;
+
+            button {
+                height: 64px;
+                width: 64px;
+                border-radius: 32px;
+                text-align: center;
+                padding: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="padding">
-        <h1>configuracoes agui</h1>
+        <form>
+            <section>
+                <div class="block">
+                    <div class="theme-carousel">
+                        <button style="background-color: #fafafb; color: rgb(0 0 6 / 80%)">Claro</button>
+                        <button style="background-color: #222226; color: #ffffff">Escuro</button>
+                    </div>
+                </div>
+            </section>
+        </form>
     </div>
 </body>
 </html>

@@ -1,0 +1,186 @@
+@import url("./var.css");
+
+.menu {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    min-width: min(180px, calc(100vw - 10px));
+    max-width: min(320px, calc(100vw - 10px));
+    max-height: calc(100vh - 10px);
+    padding: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--popover-bg-color);
+    color: var(--popover-fg-color);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    outline: none;
+    user-select: none;
+    animation: menu-show 0.12s ease-out;
+    border: 1px solid var(--border-color);
+}
+
+@keyframes menu-show {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu {
+        animation: none;
+    }
+}
+
+/* Itens */
+
+.menu button:not(.icon) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 32px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--monospace-font-size) !important;
+}
+
+.menu button:not(.icon):hover {
+    background-color: var(--hover-color);
+}
+
+.menu button:not(.icon):active {
+    filter: brightness(0.9);
+}
+
+.menu button:not(.icon):focus {
+    outline: none;
+}
+
+.menu button:not(.icon):focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;
+    background-color: var(--hover-color);
+}
+
+.menu button:not(.icon):disabled {
+    opacity: var(--disabled-opacity);
+}
+
+.menu button:not(.icon):disabled:hover {
+    background-color: transparent;
+}
+
+.menu button.destructive:not(.icon) {
+    color: var(--destructive-color);
+}
+
+.menu button.destructive:not(.icon):hover,
+.menu button.destructive:not(.icon):focus-visible {
+    background-color: color-mix(in srgb, var(--destructive-bg-color) 12%, transparent);
+}
+
+/* Indicadores */
+
+.menu [data-submenu]::after {
+    content: "";
+    flex: none;
+    width: 6px;
+    height: 6px;
+    margin-left: auto;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(45deg);
+    opacity: var(--dim-opacity);
+}
+
+.menu-shortcut {
+    margin-left: auto;
+    padding-left: 16px;
+    font-size: small;
+    opacity: var(--dim-opacity);
+}
+
+/* Fileira de ícones */
+
+.menu .icon-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    padding: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.menu .icon-row :is(button, .icon) {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: inherit;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu .icon-row :is(button, .icon):hover {
+    background-color: var(--hover-color);
+}
+
+.menu .icon-row :is(button, .icon):active {
+    filter: brightness(0.9);
+}
+
+.menu .icon-row :is(button, .icon):focus {
+    outline: none;
+}
+
+.menu .icon-row :is(button, .icon):focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;
+}
+
+.menu .icon-row :is(button, .icon):disabled {
+    opacity: var(--disabled-opacity);
+    cursor: default;
+}
+
+.menu .icon-row svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    display: block;
+    fill: currentColor;
+    pointer-events: none;
+}
+
+/* Separador */
+
+.menu hr {
+    width: 100%;
+    height: 0;
+    flex: none;
+    margin: 6px 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+}

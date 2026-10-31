@@ -283,6 +283,7 @@ class Demo {
         ui.render();
         this.updateControls();
 
+        console.log(ticket);
         console.log(`%c Demo: paciente ${ticket.patient.name} (gravidade ${ticket.patient.severity}) foi adicionado`, 'font-size: large');
 
         return ticket;

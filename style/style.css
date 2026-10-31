@@ -26,8 +26,7 @@ body {
 
 header {
     display: flex;
-    padding: 5px;
-    padding-bottom: 0px;
+    padding: 0px 5px;
     height: var(--header-height);
     align-items: center;
     justify-content: space-between;
@@ -52,8 +51,9 @@ button {
     color: var(--card-fg-color);
     border: 1px solid var(--border-color);
     padding: 6px 12px;
-    border-radius: 12px;
+    border-radius: 8px;
     user-select: none;
+    height: 30px;
 
     &:hover {
         background-color: var(--hover-color);
@@ -87,12 +87,25 @@ button {
         }
     }
 
+    &.destructive {
+        color: var(--destructive-color);
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--destructive-bg-color) 12%, transparent);
+        }
+    }
+
     &.icon {
         --icon-size: 16px;
 
         display: inline-flex;
         align-items: center;
         justify-content: center;
+
+        width: 30px;
 
         background-color: transparent;
         border: none;

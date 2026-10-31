@@ -1,11 +1,13 @@
 import { storage } from './store.js';
 import { dialog }  from './dialog.js';
+import { menu }    from './menu.js';
 import { triage }  from './triage.js';
 import { ui }      from './ui.js';
 import { demo }    from './demo.js';
 
 window.storage = storage;
 window.dialog = dialog;
+window.menu = menu;
 window.triage = triage;
 window.ui = ui;
 window.demo = demo;

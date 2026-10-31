@@ -6,15 +6,16 @@
     <title>Triagem de pacientes</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/dialog.css">
+    <link rel="stylesheet" href="style/menu.css">
 </head>
 <body>
     <header>
         <section class="left">
             <button id="add-new" class="primary">Novo diagnostico</button>
-            <button class="icon"><svg><use href="/media/icon/symbolic.svg#search"></use></svg></button>
+            <button class="icon"><svg><use href="/media/icon/symbolic.svg#chevron-right"></use></svg></button>
         </section>
         <section class="right">
-            <button class="icon"><svg><use href="/media/icon/symbolic.svg#menu"></use></svg></button>
+            <button class="icon" id="main-menu-button" onmousedown="menu.open('menu/main.menu.html', 'main-menu-button', menu.position.topRight)"><svg><use href="/media/icon/symbolic.svg#menu"></use></svg></button>
         </section>
     </header>
 
