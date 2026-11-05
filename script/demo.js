@@ -97,6 +97,19 @@ class Demo {
         ];
 
         /**
+         * Quantidade de pacientes aleatórios criados antes de liberar os easter eggs.
+         * Evita que apelidos da turma apareçam logo no início da apresentação.
+         * @type {number}
+         */
+        this.easterEggGracePeriod = 3;
+
+        /**
+         * Quantidade de pacientes aleatórios criados nesta sessão
+         * @type {number}
+         */
+        this.randomPatientsCreated = 0;
+
+        /**
          * Faixas de idade, peso e altura comuns em adultos
          * @type {object}
          */
@@ -187,7 +200,9 @@ class Demo {
      * @returns {string} o nome sorteado
      */
     randomName() {
-        if (Math.random() < 0.1) {
+        const easterEggUnlocked = this.randomPatientsCreated >= this.easterEggGracePeriod;
+
+        if (easterEggUnlocked && Math.random() < 0.1) {
             return this.pick(this.easterEggNames);
         }
 
@@ -252,7 +267,7 @@ class Demo {
         const profile = this.severityProfiles[severity];
         const pressure = this.pick(profile.pressure);
 
-        return {
+        const ticket = {
             patient: {
                 name: this.randomName(),
                 age: this.randomInt(...this.ageRange),
@@ -271,6 +286,10 @@ class Demo {
                 lastServedAt: null
             }
         };
+
+        this.randomPatientsCreated++;
+
+        return ticket;
     }
 
     /**
