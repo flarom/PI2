@@ -5,8 +5,8 @@ seleciona manualmente uma gravidade de 1 a 5 e o sistema ordena os atendimentos 
 
 O projeto é feito apenas com HTML, CSS e JavaScript, sem backend. Os dados ficam salvos no `localStorage` do navegador.
 
-> [!WARNING]Aviso
-> Rste sistema é exclusivamente acadêmico e não deve ser usado em atendimentos reais. Ele não faz
+> [!WARNING]
+> Este sistema é exclusivamente acadêmico e não deve ser usado em atendimentos reais. Ele não faz
 > diagnósticos, não interpreta sintomas ou sinais vitais e não substitui a avaliação de profissionais de saúde.
 
 ## Funcionalidades
@@ -52,7 +52,7 @@ demo.stopDemo();       // encerra o modo automático
 A demonstração cria pacientes fictícios e escolhe o próximo atendimento por uma árvore de decisão simplificada:
 emergências (gravidade 5) têm prioridade; entre os demais, o tempo de espera influencia a ordem.
 
-> [!IMPORTANT]Importante
+> [!IMPORTANT]
 > A demonstração usa os mesmos dados da fila regular. O botão **Limpar** apaga todos os tickets salvos.
 
 ## Estrutura
